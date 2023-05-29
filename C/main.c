@@ -1,9 +1,9 @@
+#include <ctype.h>
+#include <stdbool.h> // bool type
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
-#include <sys/stat.h>   // stat
-#include <stdbool.h>    // bool type
-#include <string.h>     // strchr
+#include <string.h>   // strchr
+#include <sys/stat.h> // stat
 #include <windows.h>
 
 bool HAVE_BEEN_HIDING = false;
@@ -92,7 +92,6 @@ void hiding_loop() {
 }
 
 void hide() {
-
     char *scenario = "You are hiding in the guardroom.";
     printf("%s\n", scenario);
     write_location("guardroom");
@@ -139,9 +138,7 @@ void hide() {
         printf("%s", scenario);
         play_again();
     }
-
 }
-
 
 void guardroom() {
     char *scenario = "You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out.\n";
@@ -182,7 +179,6 @@ void guardroom() {
             }
             right_corridor();
             break;
-
     }
 }
 
@@ -231,9 +227,7 @@ void left_corridor() {
     }
 }
 
-
 void right_corridor() {
-
     char *scenario = "You are standing in a corridor in the dungeon. It is very dark. A man runs towards you screaming, carrying a big sword";
     char *choices = "\n\t (r)un the other way\n\t (f)ight him\n\n";
     printf("%s. Would you like to:%s", scenario, choices);
@@ -302,7 +296,6 @@ void door_choices() {
             right_corridor();
             break;
     }
-
 }
 
 void cell_choices() {
