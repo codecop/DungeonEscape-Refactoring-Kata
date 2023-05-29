@@ -1,0 +1,8 @@
+command:  DungeonEscape
+exit-status: 0
+
+tests:
+  - name:     "quit"
+    stdin:    "q"
+    stdout:
+       file: smoke_tests/quit.txt
