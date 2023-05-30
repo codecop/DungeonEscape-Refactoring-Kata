@@ -62,6 +62,9 @@ dkms.conf
 # VSCode
 .vscode
 
+# saved game
+location.txt
+
 # lokal Peter
 .clang-format
 _*.bat
