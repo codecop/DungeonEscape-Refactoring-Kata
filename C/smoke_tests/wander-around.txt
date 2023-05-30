@@ -1,23 +1,23 @@
 Press q to quit at any time.
 
-You are standing in a cell in the dungeon. The recent earthquake has broken the door. Would you like to 
+You are standing in a cell in the dungeon. The recent earthquake has broken the door. Would you like to:
 	 (s)tay in the cell
 	 go through the (d)oor
 
 Unexpected input 120 (0x78) ('x')
 stay in the cell
-You are standing in a cell in the dungeon. The recent earthquake has broken the door. Would you like to 
+You are standing in a cell in the dungeon. The recent earthquake has broken the door. Would you like to:
 	 (s)tay in the cell
 	 go through the (d)oor
 
 go through the door
-You are standing in a corridor in the dungeon. To the left you can see a torch burning and some steps. To the right it is dark and you hear screams. Would you like to 
+You are standing in a corridor in the dungeon. To the left you can see a torch burning and some steps. To the right it is dark and you hear screams. Would you like to:
 	 go (l)eft
 	 go (r)ight
 
 Unexpected input 120 (0x78) ('x')
 go left
-You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you.. Would you like to:
+You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you. Would you like to:
 	 go (u)p the stairs
 	 go (b)ack
 	 go (t)hrough the door
@@ -30,7 +30,7 @@ You are standing in a corridor in the dungeon. It is very dark. A man runs towar
 
 Unexpected input 120 (0x78) ('x')
 run
-You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you.. Would you like to:
+You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you. Would you like to:
 	 go (u)p the stairs
 	 go (b)ack
 	 go (t)hrough the door
@@ -41,14 +41,13 @@ You are standing in a corridor in the dungeon. It is very dark. A man runs towar
 	 (f)ight him
 
 run
-You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you.. Would you like to:
+You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you. Would you like to:
 	 go (u)p the stairs
 	 go (b)ack
 	 go (t)hrough the door
 
 go through the door
-You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out.
-. Would you like to:
+You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out. Would you like to:
 	 go back (o)ut of the guardroom
 	 (h)ide in the guardroom
 	 (s)earch the guardroom
@@ -58,7 +57,7 @@ hide
 You are hiding in the guardroom.
 The screams are quieter.
 The screams are quieter.
-You are hiding in the guardroom.. Would you like to:
+You are hiding in the guardroom. Would you like to:
 	 go back (o)ut of the guardroom
 	 Continue (h)iding
 
@@ -67,7 +66,7 @@ hide
 You are hiding in the guardroom.
 The screams are quieter.
 The screams are quieter.
-You are hiding in the guardroom.. Would you like to:
+You are hiding in the guardroom. Would you like to:
 	 go back (o)ut of the guardroom
 	 Continue (h)iding
 
@@ -77,14 +76,13 @@ You are standing in a corridor in the dungeon. It is very dark. A man runs towar
 	 (f)ight him
 
 run
-You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you.. Would you like to:
+You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you. Would you like to:
 	 go (u)p the stairs
 	 go (b)ack
 	 go (t)hrough the door
 
 go through the door
-You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out.
-. Would you like to:
+You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out. Would you like to:
 	 go back (o)ut of the guardroom
 	 (h)ide in the guardroom
 	 (s)earch the guardroom
@@ -92,8 +90,7 @@ You are standing in an empty guard room that looks to have been hastily abandone
 search
 You are searching the guardroom.
 There is no-one here
-You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out.
-. Would you like to:
+You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out. Would you like to:
 	 go back (o)ut of the guardroom
 	 (h)ide in the guardroom
 	 (s)earch the guardroom

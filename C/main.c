@@ -108,10 +108,13 @@ void hide() {
     write_location("guardroom");
     hiding_loop();
     if (file_exists("location.txt")) {
-        scenario = "You are hiding in the guardroom.";
-        char *choices = "\n\t go back (o)ut of the guardroom\n\t Continue (h)iding\n\n";
-        printf("%s. Would you like to:%s", scenario, choices);
+        
+        scenario = "You are hiding in the guardroom";
+        char *choices = "\n\t go back (o)ut of the guardroom\n\t Continue (h)iding";
+        printf("%s. Would you like to:%s\n\n", scenario, choices);
+
         int command = input_command("oh");
+        
         switch (command) {
             case 'o':
                 printf("out of the guardroom\n");
@@ -125,6 +128,7 @@ void hide() {
                 hide();
                 break;
         }
+        
     } else {
         scenario = "You realize the room is not empty any more. A guard appears and captures you. Soon you find yourself back in your cell, feeling miserable that your escape attempt failed.\n";
         printf("%s", scenario);
@@ -133,10 +137,10 @@ void hide() {
 }
 
 void guardroom() {
-    char *scenario = "You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out.\n";
-    char *choices = "\n\t go back (o)ut of the guardroom\n\t (h)ide in the guardroom\n\t (s)earch the guardroom\n\n";
-    
-    printf("%s. Would you like to:%s", scenario, choices);
+    char *scenario = "You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out";
+    char *choices = "\n\t go back (o)ut of the guardroom\n\t (h)ide in the guardroom\n\t (s)earch the guardroom";
+    printf("%s. Would you like to:%s\n\n", scenario, choices);
+
     int command;
     while (true) {
         command = input_command("ohs");
@@ -167,7 +171,7 @@ void upstairs() {
 }
 
 void left_corridor() {
-    char *scenario = "You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you.";
+    char *scenario = "You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you";
     char *choices = "\n\t go (u)p the stairs\n\t go (b)ack\n\t go (t)hrough the door";
     printf("%s. Would you like to:%s\n\n", scenario, choices);
     
@@ -212,7 +216,7 @@ void right_corridor() {
 void corridor_outside_cell() {
     char *scenario = "You are standing in a corridor in the dungeon. To the left you can see a torch burning and some steps. To the right it is dark and you hear screams";
     char *choices = "\n\t go (l)eft\n\t go (r)ight";
-    printf("%s. Would you like to %s\n\n", scenario, choices);
+    printf("%s. Would you like to:%s\n\n", scenario, choices);
 
     int command = input_command("lr");
 
@@ -231,7 +235,7 @@ void corridor_outside_cell() {
 void in_a_cell() {
     char *scenario = "You are standing in a cell in the dungeon. The recent earthquake has broken the door";
     char *choices = "\n\t (s)tay in the cell\n\t go through the (d)oor";
-    printf("%s. Would you like to %s\n\n", scenario, choices);
+    printf("%s. Would you like to:%s\n\n", scenario, choices);
 
     int command = input_command("sd");
 

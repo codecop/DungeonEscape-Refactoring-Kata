@@ -1,11 +1,11 @@
 Press q to quit at any time.
 
-You are standing in a cell in the dungeon. The recent earthquake has broken the door. Would you like to 
+You are standing in a cell in the dungeon. The recent earthquake has broken the door. Would you like to:
 	 (s)tay in the cell
 	 go through the (d)oor
 
 go through the door
-You are standing in a corridor in the dungeon. To the left you can see a torch burning and some steps. To the right it is dark and you hear screams. Would you like to 
+You are standing in a corridor in the dungeon. To the left you can see a torch burning and some steps. To the right it is dark and you hear screams. Would you like to:
 	 go (l)eft
 	 go (r)ight
 
