@@ -8,9 +8,9 @@
 
 bool HAVE_BEEN_HIDING = false;
 
-void in_a_cell();
+void room_in_a_cell();
 
-void right_corridor();
+void room_right_corridor();
 
 void guardroom();
 
@@ -66,7 +66,7 @@ void play_again() {
     switch (command) {
         case 'y':
             printf("play again\n");
-            in_a_cell();
+            room_in_a_cell();
             break;
         case 'n':
             quit("Thankyou for playing");
@@ -74,15 +74,17 @@ void play_again() {
     }
 }
 
+void game_won(char *scenario) {
+    printf("%s\nCongratulations! You have won!!\n\n", scenario);
+    play_again();
+}
+
 void search() {
     char *scenario = "You are searching the guardroom.";
     printf("%s\n", scenario);
     if (file_exists("location.txt")) {
-        // TODO typos to make it similar to other code
-        scenario = "You have found the escaped prisonor! Take them back to their cell. Contragulations, you have won!";
-        printf("%s\n", scenario);
         delete_location();
-        play_again();
+        game_won("You have found the escaped prisonor! Take them back to their cell.");
     } else {
         scenario = "There is no-one here";
         printf("%s\n", scenario);
@@ -100,6 +102,11 @@ void hiding_loop() {
         Sleep(500);
         counter++;
     }
+}
+
+void game_lost(char *scenario) {
+    printf("%s\n", scenario);
+    play_again();
 }
 
 void hide() {
@@ -121,18 +128,16 @@ void hide() {
                 if (HAVE_BEEN_HIDING) {
                     delete_location();
                 }
-                right_corridor();
+                room_right_corridor();
                 break;
             case 'h':
                 printf("hide\n");
                 hide();
                 break;
         }
-        
+
     } else {
-        scenario = "You realize the room is not empty any more. A guard appears and captures you. Soon you find yourself back in your cell, feeling miserable that your escape attempt failed.\n";
-        printf("%s", scenario);
-        play_again();
+        game_lost("You realize the room is not empty any more. A guard appears and captures you. Soon you find yourself back in your cell, feeling miserable that your escape attempt failed.");
     }
 }
 
@@ -149,7 +154,7 @@ void guardroom() {
             if (HAVE_BEEN_HIDING) {
                 delete_location();
             }
-            right_corridor();
+            room_right_corridor();
             break;
         }
         switch (command) {
@@ -166,8 +171,7 @@ void guardroom() {
 }
 
 void upstairs() {
-    printf("The stairs lead to the dungeon exit. Your friend Freija the Magnificent Warrior runs towards you and embraces you. 'I am here to rescue you!' she says.\nCongratulations! You have won!!\n\n");
-    play_again();
+    game_won("The stairs lead to the dungeon exit. Your friend Freija the Magnificent Warrior runs towards you and embraces you. 'I am here to rescue you!' she says.");
 }
 
 void left_corridor() {
@@ -184,7 +188,7 @@ void left_corridor() {
             break;
         case 'b':
             printf("go back\n");
-            right_corridor();
+            room_right_corridor();
             break;
         case 't':
             printf("go through the door\n");
@@ -193,7 +197,7 @@ void left_corridor() {
     }
 }
 
-void right_corridor() {
+void room_right_corridor() {
     char *scenario = "You are standing in a corridor in the dungeon. It is very dark. A man runs towards you screaming, carrying a big sword";
     char *choices = "\n\t (r)un the other way\n\t (f)ight him";
     printf("%s. Would you like to:%s\n\n", scenario, choices);
@@ -207,13 +211,12 @@ void right_corridor() {
             break;
         case 'f':
             printf("fight\n");
-            printf("Unfortunately you lose the fight and fall to the floor dead.\n");
-            play_again();
+            game_lost("Unfortunately you lose the fight and fall to the floor dead.");
             break;
     }
 }
 
-void corridor_outside_cell() {
+void room_corridor_outside_cell() {
     char *scenario = "You are standing in a corridor in the dungeon. To the left you can see a torch burning and some steps. To the right it is dark and you hear screams";
     char *choices = "\n\t go (l)eft\n\t go (r)ight";
     printf("%s. Would you like to:%s\n\n", scenario, choices);
@@ -227,12 +230,12 @@ void corridor_outside_cell() {
             break;
         case 'r':
             printf("go right\n");
-            right_corridor();
+            room_right_corridor();
             break;
     }
 }
 
-void in_a_cell() {
+void room_in_a_cell() {
     char *scenario = "You are standing in a cell in the dungeon. The recent earthquake has broken the door";
     char *choices = "\n\t (s)tay in the cell\n\t go through the (d)oor";
     printf("%s. Would you like to:%s\n\n", scenario, choices);
@@ -242,11 +245,11 @@ void in_a_cell() {
     switch (command) {
         case 's':
             printf("stay in the cell\n");
-            in_a_cell();
+            room_in_a_cell();
             break;
         case 'd':
             printf("go through the door\n");
-            corridor_outside_cell();
+            room_corridor_outside_cell();
             break;
     }
 }
@@ -254,7 +257,7 @@ void in_a_cell() {
 int main() {
     printf("Press q to quit at any time.\n\n");
 
-    in_a_cell();
+    room_in_a_cell();
 
     return 0;
 }

@@ -23,6 +23,8 @@ You are standing in an empty guard room that looks to have been hastily abandone
 
 search
 You are searching the guardroom.
-You have found the escaped prisonor! Take them back to their cell. Contragulations, you have won!
+You have found the escaped prisonor! Take them back to their cell.
+Congratulations! You have won!!
+
 Play again? y/n
 Quit
