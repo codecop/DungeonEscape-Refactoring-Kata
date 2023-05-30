@@ -136,13 +136,17 @@ void guardroom() {
     char *choices = "\n\t go back (o)ut of the guardroom\n\t (h)ide in the guardroom\n\t (s)earch the guardroom\n\n";
     printf("%s. Would you like to:%s", scenario, choices);
     int command;
-    while ((command = getchar()) != EOF) {
-        if (strchr("o", command) != NULL) {
+    while (true) {
+        command = input_command("ohs");
+        if (command == 'o') {
+            printf("out of the guardroom\n");
+            if (HAVE_BEEN_HIDING) {
+                delete_location();
+            }
+            right_corridor();
             break;
         }
         switch (command) {
-            case 10:
-                break;
             case 'h':
                 printf("hide\n");
                 hide();
@@ -151,23 +155,7 @@ void guardroom() {
                 printf("search\n");
                 search();
                 break;
-            case 'q':
-                quit("");
-                break;
-
-            default:
-                unexpected_input(command);
-                break;
         }
-    }
-    switch (command) {
-        case 'o':
-            printf("out of the guardroom\n");
-            if (HAVE_BEEN_HIDING) {
-                delete_location();
-            }
-            right_corridor();
-            break;
     }
 }
 
