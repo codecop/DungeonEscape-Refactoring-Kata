@@ -2,17 +2,88 @@ command:  DungeonEscape
 exit-status: 0
 
 tests:
-  - name: "quit"
-    stdin: "q"
-    stdout:
-       file: smoke_tests/quit.txt
-
-  - name: "freija"
+  - name: "just-quit"
     stdin: |
-      s
+      q
+    stdout:
+       file: smoke_tests/just-quit.txt
+
+  - name: "escape-freija"
+    stdin: |
       d
       l
       u
       n
     stdout:
-       file: smoke_tests/freija.txt
+       file: smoke_tests/escape-freija.txt
+
+  - name: "play-again"
+    stdin: |
+      d
+      l
+      u
+      x
+      y
+      q
+    stdout:
+       file: smoke_tests/play-again.txt
+
+  - name: "fight-die"
+    stdin: |
+      d
+      r
+      f
+      n
+    stdout:
+       file: smoke_tests/fight-die.txt
+
+  - name: "hide"
+    stdin: |
+      d
+      l
+      t
+      h
+      q
+    stdout:
+       file: smoke_tests/hide.txt
+    files:
+      - path: location.txt
+        contents:
+          file: smoke_tests/fixture-location.txt
+
+  - name: "un-hide"
+    stdin: |
+      d
+      l
+      t
+      h
+      o
+      q
+    stdout:
+       file: smoke_tests/un-hide.txt
+
+  - name: "wander"
+    stdin: |
+      x
+      s
+      d
+      x
+      l
+      x
+      b
+      x
+      r
+      b
+      r
+      t
+      x
+      h
+      x
+      h
+      o
+      r
+      t
+      s
+      q
+    stdout:
+       file: smoke_tests/wander.txt
