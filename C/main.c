@@ -62,7 +62,7 @@ void play_again() {
             cell_choices();
             break;
         case 'n':
-            printf("quit\n");
+            printf("Quit\n");
             printf("Thankyou for playing");
             exit(0);
             break;

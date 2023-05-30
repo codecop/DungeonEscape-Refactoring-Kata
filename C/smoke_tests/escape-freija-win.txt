@@ -20,5 +20,5 @@ The stairs lead to the dungeon exit. Your friend Freija the Magnificent Warrior 
 Congratulations! You have won!!
 
 Play again? y/n
-quit
+Quit
 Thankyou for playing
