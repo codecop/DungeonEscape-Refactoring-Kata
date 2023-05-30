@@ -40,26 +40,29 @@ void unexpected_input(int command) {
             command, command, isgraph(command) ? command : '.');
 }
 
-void play_again() {
-    printf("Play again? y/n\n");
-    int command;
+int input_command(char *allowed) {
+    int command = 0;
     while ((command = getchar()) != EOF) {
-        if (strchr("yn", command) != NULL) {
+        if (strchr(allowed, command) != NULL) {
             break;
         }
         switch (command) {
             case 10:
                 break;
-
             case 'q':
                 quit("");
                 break;
-
             default:
                 unexpected_input(command);
                 break;
         }
-    }
+    }   
+    return command;
+}
+
+void play_again() {
+    printf("Play again? y/n\n");
+    int command = input_command("yn");
     switch (command) {
         case 'y':
             printf("play again\n");
@@ -102,29 +105,12 @@ void hide() {
     char *scenario = "You are hiding in the guardroom.";
     printf("%s\n", scenario);
     write_location("guardroom");
-    int command;
     hiding_loop();
     if (file_exists("location.txt")) {
         scenario = "You are hiding in the guardroom.";
         char *choices = "\n\t go back (o)ut of the guardroom\n\t Continue (h)iding\n\n";
         printf("%s. Would you like to:%s", scenario, choices);
-        while ((command = getchar()) != EOF) {
-            if (strchr("oh", command) != NULL) {
-                break;
-            }
-            switch (command) {
-                case 10:
-                    break;
-
-                case 'q':
-                    quit("");
-                    break;
-
-                default:
-                    unexpected_input(command);
-                    break;
-            }
-        }
+        int command = input_command("oh");
         switch (command) {
             case 'o':
                 printf("out of the guardroom\n");
@@ -194,24 +180,7 @@ void left_corridor() {
     char *scenario = "You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you.";
     char *choices = "\n\t go (u)p the stairs\n\t go (b)ack\n\t go (t)hrough the door\n\n";
     printf("%s. Would you like to:%s", scenario, choices);
-    int command;
-    while ((command = getchar()) != EOF) {
-        if (strchr("ubt", command) != NULL) {
-            break;
-        }
-        switch (command) {
-            case 10:
-                break;
-
-            case 'q':
-                quit("");
-                break;
-
-            default:
-                unexpected_input(command);
-                break;
-        }
-    }
+    int command = input_command("ubt");
     switch (command) {
         case 'u':
             printf("up the stairs\n");
@@ -232,24 +201,7 @@ void right_corridor() {
     char *scenario = "You are standing in a corridor in the dungeon. It is very dark. A man runs towards you screaming, carrying a big sword";
     char *choices = "\n\t (r)un the other way\n\t (f)ight him\n\n";
     printf("%s. Would you like to:%s", scenario, choices);
-    int command;
-    while ((command = getchar()) != EOF) {
-        if (strchr("rf", command) != NULL) {
-            break;
-        }
-        switch (command) {
-            case 10:
-                break;
-
-            case 'q':
-                quit("");
-                break;
-
-            default:
-                unexpected_input(command);
-                break;
-        }
-    }
+    int command = input_command("rf");
     switch (command) {
         case 'r':
             printf("run\n");
@@ -266,23 +218,7 @@ void right_corridor() {
 void door_choices() {
     char *choices = "You are standing in a corridor in the dungeon. To the left you can see a torch burning and some steps. To the right it is dark and you hear screams. Would you like to \n\t go (l)eft\n\t go (r)ight\n\n";
     printf("%s", choices);
-    int command;
-
-    while ((command = getchar()) != EOF) {
-        if (strchr("lr", command) != NULL) {
-            break;
-        }
-        switch (command) {
-            case 10:
-                break;
-            case 'q':
-                quit("");
-                break;
-            default:
-                unexpected_input(command);
-                break;
-        }
-    }
+    int command = input_command("lr");
     switch (command) {
         case 'l':
             printf("go left\n");
@@ -299,22 +235,7 @@ void cell_choices() {
     char *choices = "You are standing in a cell in the dungeon. The recent earthquake has broken the door. Would you like to \n\t (s)tay in the cell\n\t go through the (d)oor\n\n";
     printf("%s", choices);
 
-    int command;
-    while ((command = getchar()) != EOF) {
-        if (strchr("sd", command) != NULL) {
-            break;
-        }
-        switch (command) {
-            case 10:
-                break;
-            case 'q':
-                quit("");
-                break;
-            default:
-                unexpected_input(command);
-                break;
-        }
-    }
+    int command = input_command("sd");
     switch (command) {
         case 's':
             printf("stay in the cell\n");
