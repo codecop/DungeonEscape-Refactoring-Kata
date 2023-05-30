@@ -2,7 +2,17 @@ command:  DungeonEscape
 exit-status: 0
 
 tests:
-  - name:     "quit"
-    stdin:    "q"
+  - name: "quit"
+    stdin: "q"
     stdout:
        file: smoke_tests/quit.txt
+
+  - name: "freija"
+    stdin: |
+      s
+      d
+      l
+      u
+      n
+    stdout:
+       file: smoke_tests/freija.txt
