@@ -12,7 +12,7 @@ void room_in_a_cell();
 
 void room_right_corridor();
 
-void guardroom();
+void room_guardroom();
 
 bool file_exists(char *filename) {
     struct stat buffer;
@@ -88,7 +88,7 @@ void search() {
     } else {
         scenario = "There is no-one here";
         printf("%s\n", scenario);
-        guardroom();
+        room_guardroom();
     }
 }
 
@@ -141,7 +141,7 @@ void hide() {
     }
 }
 
-void guardroom() {
+void room_guardroom() {
     char *scenario = "You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out";
     char *choices = "\n\t go back (o)ut of the guardroom\n\t (h)ide in the guardroom\n\t (s)earch the guardroom";
     printf("%s. Would you like to:%s\n\n", scenario, choices);
@@ -170,11 +170,11 @@ void guardroom() {
     }
 }
 
-void upstairs() {
+void room_upstairs() {
     game_won("The stairs lead to the dungeon exit. Your friend Freija the Magnificent Warrior runs towards you and embraces you. 'I am here to rescue you!' she says.");
 }
 
-void left_corridor() {
+void room_left_corridor() {
     char *scenario = "You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you";
     char *choices = "\n\t go (u)p the stairs\n\t go (b)ack\n\t go (t)hrough the door";
     printf("%s. Would you like to:%s\n\n", scenario, choices);
@@ -184,7 +184,7 @@ void left_corridor() {
     switch (command) {
         case 'u':
             printf("up the stairs\n");
-            upstairs();
+            room_upstairs();
             break;
         case 'b':
             printf("go back\n");
@@ -192,7 +192,7 @@ void left_corridor() {
             break;
         case 't':
             printf("go through the door\n");
-            guardroom();
+            room_guardroom();
             break;
     }
 }
@@ -207,7 +207,7 @@ void room_right_corridor() {
     switch (command) {
         case 'r':
             printf("run\n");
-            left_corridor();
+            room_left_corridor();
             break;
         case 'f':
             printf("fight\n");
@@ -226,7 +226,7 @@ void room_corridor_outside_cell() {
     switch (command) {
         case 'l':
             printf("go left\n");
-            left_corridor();
+            room_left_corridor();
             break;
         case 'r':
             printf("go right\n");
