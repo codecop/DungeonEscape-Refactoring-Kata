@@ -35,6 +35,11 @@ void quit(char *message) {
     exit(0);
 }
 
+void unexpected_input(int command) {
+    printf("Unexpected input %d (0x%.2X) ('%c')\n",
+            command, command, isgraph(command) ? command : '.');
+}
+
 void play_again() {
     printf("Play again? y/n\n");
     int command;
@@ -51,8 +56,7 @@ void play_again() {
                 break;
 
             default:
-                printf("Unexpected input %d (0x%.2X) ('%c')\n",
-                       command, command, isgraph(command) ? command : '.');
+                unexpected_input(command);
                 break;
         }
     }
@@ -117,8 +121,7 @@ void hide() {
                     break;
 
                 default:
-                    printf("Unexpected input %d (0x%.2X) ('%c')\n",
-                           command, command, isgraph(command) ? command : '.');
+                    unexpected_input(command);
                     break;
             }
         }
@@ -167,8 +170,7 @@ void guardroom() {
                 break;
 
             default:
-                printf("Unexpected input %d (0x%.2X) ('%c')\n",
-                       command, command, isgraph(command) ? command : '.');
+                unexpected_input(command);
                 break;
         }
     }
@@ -206,8 +208,7 @@ void left_corridor() {
                 break;
 
             default:
-                printf("Unexpected input %d (0x%.2X) ('%c')\n",
-                       command, command, isgraph(command) ? command : '.');
+                unexpected_input(command);
                 break;
         }
     }
@@ -245,8 +246,7 @@ void right_corridor() {
                 break;
 
             default:
-                printf("Unexpected input %d (0x%.2X) ('%c')\n",
-                       command, command, isgraph(command) ? command : '.');
+                unexpected_input(command);
                 break;
         }
     }
@@ -279,8 +279,7 @@ void door_choices() {
                 quit("");
                 break;
             default:
-                printf("Unexpected input %d (0x%.2X) ('%c')\n",
-                       command, command, isgraph(command) ? command : '.');
+                unexpected_input(command);
                 break;
         }
     }
@@ -312,8 +311,7 @@ void cell_choices() {
                 quit("");
                 break;
             default:
-                printf("Unexpected input %d (0x%.2X) ('%c')\n",
-                       command, command, isgraph(command) ? command : '.');
+                unexpected_input(command);
                 break;
         }
     }
