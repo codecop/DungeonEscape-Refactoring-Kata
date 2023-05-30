@@ -29,6 +29,12 @@ void delete_location() {
     remove("location.txt");
 }
 
+void quit(char *message) {
+    printf("Quit\n");
+    printf(message);
+    exit(0);
+}
+
 void play_again() {
     printf("Play again? y/n\n");
     int command;
@@ -41,8 +47,7 @@ void play_again() {
                 break;
 
             case 'q':
-                printf("Quit\n");
-                exit(0);
+                quit("");
                 break;
 
             default:
@@ -110,8 +115,7 @@ void hide() {
                     break;
 
                 case 'q':
-                    printf("Quit\n");
-                    exit(0);
+                    quit("");
                     break;
 
                 default:
@@ -161,8 +165,7 @@ void guardroom() {
                 search();
                 break;
             case 'q':
-                printf("Quit\n");
-                exit(0);
+                quit("");
                 break;
 
             default:
@@ -201,8 +204,7 @@ void left_corridor() {
                 break;
 
             case 'q':
-                printf("Quit\n");
-                exit(0);
+                quit("");
                 break;
 
             default:
@@ -241,8 +243,7 @@ void right_corridor() {
                 break;
 
             case 'q':
-                printf("Quit\n");
-                exit(0);
+                quit("");
                 break;
 
             default:
@@ -277,8 +278,7 @@ void door_choices() {
             case 10:
                 break;
             case 'q':
-                printf("Quit\n");
-                exit(0);
+                quit("");
                 break;
             default:
                 printf("Unexpected input %d (0x%.2X) ('%c')\n",
@@ -311,8 +311,7 @@ void cell_choices() {
             case 10:
                 break;
             case 'q':
-                printf("Quit\n");
-                exit(0);
+                quit("");
                 break;
             default:
                 printf("Unexpected input %d (0x%.2X) ('%c')\n",
