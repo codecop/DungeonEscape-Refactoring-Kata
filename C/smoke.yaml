@@ -1,4 +1,4 @@
-command:  DungeonEscape
+command: DungeonEscape
 exit-status: 0
 
 tests:
@@ -8,14 +8,14 @@ tests:
     stdout:
        file: smoke_tests/just-quit.txt
 
-  - name: "escape-freija"
+  - name: "escape-freija-win"
     stdin: |
       d
       l
       u
       n
     stdout:
-       file: smoke_tests/escape-freija.txt
+       file: smoke_tests/escape-freija-win.txt
 
   - name: "play-again"
     stdin: |
@@ -62,7 +62,18 @@ tests:
     stdout:
        file: smoke_tests/un-hide.txt
 
-  - name: "wander"
+  - name: "find-prisoner-win"
+    command: cp smoke_tests/fixture-location.txt ./location.txt && DungeonEscape
+    stdin: |
+      d
+      l
+      t
+      s
+      q
+    stdout:
+       file: smoke_tests/find-prisoner-win.txt
+
+  - name: "wander-around"
     stdin: |
       x
       s
@@ -86,4 +97,4 @@ tests:
       s
       q
     stdout:
-       file: smoke_tests/wander.txt
+       file: smoke_tests/wander-around.txt
