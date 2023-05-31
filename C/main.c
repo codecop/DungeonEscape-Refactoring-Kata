@@ -37,7 +37,7 @@ void quit(char *message) {
 
 void unexpected_input(int command) {
     printf("Unexpected input %d (0x%.2X) ('%c')\n",
-            command, command, isgraph(command) ? command : '.');
+           command, command, isgraph(command) ? command : '.');
 }
 
 int input_command(char *allowed) {
@@ -56,7 +56,7 @@ int input_command(char *allowed) {
                 unexpected_input(command);
                 break;
         }
-    }   
+    }
     return command;
 }
 
@@ -115,13 +115,12 @@ void hide() {
     write_location("guardroom");
     hiding_loop();
     if (file_exists("location.txt")) {
-        
         scenario = "You are hiding in the guardroom";
         char *choices = "\n\t go back (o)ut of the guardroom\n\t Continue (h)iding";
         printf("%s. Would you like to:%s\n\n", scenario, choices);
 
         int command = input_command("oh");
-        
+
         switch (command) {
             case 'o':
                 printf("out of the guardroom\n");
@@ -178,7 +177,7 @@ void room_left_corridor() {
     char *scenario = "You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you";
     char *choices = "\n\t go (u)p the stairs\n\t go (b)ack\n\t go (t)hrough the door";
     printf("%s. Would you like to:%s\n\n", scenario, choices);
-    
+
     int command = input_command("ubt");
 
     switch (command) {
@@ -203,7 +202,7 @@ void room_right_corridor() {
     printf("%s. Would you like to:%s\n\n", scenario, choices);
 
     int command = input_command("rf");
-    
+
     switch (command) {
         case 'r':
             printf("run\n");
@@ -235,8 +234,41 @@ void room_corridor_outside_cell() {
     }
 }
 
+#define MAX_CHOICES 10
+
+typedef struct Choice {
+    char *description;
+    char key_to_press;
+    char *action;
+    void (*next_scenario)(void);
+} Choice;
+
+typedef struct Scenario {
+    char *description;
+    int number_of_choices;
+    Choice choices[MAX_CHOICES];
+} Scenario;
+
+Scenario R_in_cell = {
+    .description = "You are standing in a cell in the dungeon. The recent earthquake has broken the door",
+    .number_of_choices = 2,
+    .choices = {
+        {
+            .description = "(s)tay in the cell",
+            .key_to_press = 's',
+            .action = "stay in the cell",
+            .next_scenario = room_in_a_cell,
+        },
+        {
+            .description = "go through the (d)oor",
+            .key_to_press = 'd',
+            .action = "go through the door",
+            .next_scenario = room_corridor_outside_cell,
+        },
+    }};
+
 void room_in_a_cell() {
-    char *scenario = "You are standing in a cell in the dungeon. The recent earthquake has broken the door";
+    char *scenario = R_in_cell.description;
     char *choices = "\n\t (s)tay in the cell\n\t go through the (d)oor";
     printf("%s. Would you like to:%s\n\n", scenario, choices);
 
