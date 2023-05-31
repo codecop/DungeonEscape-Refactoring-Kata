@@ -34,7 +34,7 @@ int input_command(char *allowed) {
     return command;
 }
 
-extern void start_game(void);
+extern void first_scenario(void);
 
 Scenario Scenario_Play_again = {
     .description = "Play again? y/n",
@@ -43,7 +43,7 @@ Scenario Scenario_Play_again = {
         {
             .key_to_press = 'y',
             .action = "play again",
-            .next_scenario = start_game,
+            .next_scenario = first_scenario,
         },
         {
             .key_to_press = 'n',
@@ -63,4 +63,9 @@ void game_won(void) {
 
 void game_lost(void) {
     play_again();
+}
+
+void start_game(void) {
+    printf("Press q to quit at any time.\n\n");
+    first_scenario();
 }

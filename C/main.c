@@ -7,8 +7,6 @@
 
 bool HAVE_BEEN_HIDING = false;
 
-void start_game();
-
 void room_right_corridor();
 
 void room_guardroom();
@@ -203,13 +201,11 @@ void room_in_a_cell() {
     scenario(&Scenario_In_a_cell);
 }
 
-void start_game() {
+void first_scenario() {
     room_in_a_cell();
 }
 
 int main() {
-    printf("Press q to quit at any time.\n\n");
-
     start_game();
 
     return 0;
