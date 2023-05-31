@@ -234,33 +234,68 @@ void room_corridor_outside_cell() {
     }
 }
 
+#define MAX_SCENARIO_DESCRIPTION 100
 #define MAX_CHOICES 10
+#define MAX_CHOICE_DESCRIPTION 40
 
 typedef struct Choice {
-    char description[40];
+    char description[MAX_CHOICE_DESCRIPTION + 1];
     char key_to_press;
     char *action;
     void (*next_scenario)(void);
 } Choice;
 
 typedef struct Scenario {
-    char description[100];
+    char description[MAX_SCENARIO_DESCRIPTION];
     int number_of_choices;
     Choice choices[MAX_CHOICES];
 } Scenario;
 
-char choices_buffer[MAX_CHOICES * 40];
-
-char *create_choices(Scenario *scenario) {
-    choices_buffer[0] = 0;
-    for (int i = 0; i < scenario->number_of_choices; i++) {
-        strcat(choices_buffer, "\n\t ");
-        strcat(choices_buffer, scenario->choices[i].description);
-    }
-    return choices_buffer;
+char *scenario_describe(Scenario *scenario) {
+    return scenario->description;
 }
 
-Scenario R_in_cell = {
+char choices_description_buffer[MAX_CHOICES * MAX_CHOICE_DESCRIPTION + 1];
+
+char *scenario_describe_choices(Scenario *scenario) {
+    choices_description_buffer[0] = 0;
+    for (int i = 0; i < scenario->number_of_choices; i++) {
+        strcat(choices_description_buffer, "\n\t ");
+        strcat(choices_description_buffer, scenario->choices[i].description);
+    }
+    return choices_description_buffer;
+}
+
+char choices_key_buffer[MAX_CHOICES * 1 + 1];
+
+char *scenario_list_choice_keys(Scenario *scenario) {
+    choices_key_buffer[0] = 0;
+    for (int i = 0; i < scenario->number_of_choices; i++) {
+        choices_key_buffer[i] = scenario->choices[i].key_to_press;
+        choices_key_buffer[i + 1] = 0;
+    }
+    return choices_key_buffer;
+}
+
+void scenario_execute_choice(Scenario *scenario, int command) {
+    for (int i = 0; i < scenario->number_of_choices; i++) {
+        if (command == scenario->choices[i].key_to_press) {
+            printf("%s\n", scenario->choices[i].action);
+            scenario->choices[i].next_scenario();
+            break;
+        }
+    }
+}
+
+void scenario(Scenario *scenario) {
+    char *description = scenario_describe(scenario);
+    char *choices = scenario_describe_choices(scenario);
+    printf("%s. Would you like to:%s\n\n", description, choices);
+    int command = input_command(scenario_list_choice_keys(scenario));
+    scenario_execute_choice(scenario, command);
+}
+
+Scenario Scenario_in_a_cell = {
     .description = "You are standing in a cell in the dungeon. The recent earthquake has broken the door",
     .number_of_choices = 2,
     .choices = {
@@ -279,22 +314,7 @@ Scenario R_in_cell = {
     }};
 
 void room_in_a_cell() {
-    char *scenario = R_in_cell.description;
-    char *choices = create_choices(&R_in_cell);
-    printf("%s. Would you like to:%s\n\n", scenario, choices);
-
-    int command = input_command("sd");
-
-    switch (command) {
-        case 's':
-            printf("stay in the cell\n");
-            room_in_a_cell();
-            break;
-        case 'd':
-            printf("go through the door\n");
-            room_corridor_outside_cell();
-            break;
-    }
+    scenario(&Scenario_in_a_cell);
 }
 
 int main() {
