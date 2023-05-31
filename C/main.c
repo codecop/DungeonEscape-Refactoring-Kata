@@ -1,11 +1,9 @@
+#include "framework.h"
 #include "scenario.h"
-#include <ctype.h>
-#include <stdbool.h> // bool type
+#include <stdbool.h>  // bool type
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>   // strchr
 #include <sys/stat.h> // stat
-#include <windows.h>
+#include <windows.h>  // sleep
 
 bool HAVE_BEEN_HIDING = false;
 
@@ -30,67 +28,13 @@ void delete_location() {
     remove("location.txt");
 }
 
-void quit() {
-    exit(0);
-}
-
-void unexpected_input(int command) {
-    printf("Unexpected input %d (0x%.2X) ('%c')\n",
-           command, command, isgraph(command) ? command : '.');
-}
-
-int input_command(char *allowed) {
-    int command = 0;
-    while ((command = getchar()) != EOF) {
-        if (strchr(allowed, command) != NULL) {
-            break;
-        }
-        switch (command) {
-            case 10:
-                break;
-            case 'q':
-                printf("Quit\n");
-                quit();
-                break;
-            default:
-                unexpected_input(command);
-                break;
-        }
-    }
-    return command;
-}
-
-Scenario Scenario_Play_again = {
-    .description = "Play again? y/n",
-    .number_of_choices = 2,
-    .choices = {
-        {
-            .key_to_press = 'y',
-            .action = "play again",
-            .next_scenario = start_game,
-        },
-        {
-            .key_to_press = 'n',
-            .action = "Quit\nThankyou for playing",
-            .next_scenario = quit,
-        },
-    }};
-
-void play_again() {
-    scenario(&Scenario_Play_again);
-}
-
-void game_won(char *scenario) {
-    printf("%s\nCongratulations! You have won!!\n\n", scenario);
-    play_again();
-}
-
 void search() {
-    char *scenario = "You are searching the guardroom";
-    printf("%s.\n", scenario);
+    printf("You are searching the guardroom.\n");
     if (file_exists("location.txt")) {
         delete_location();
-        game_won("You have found the escaped prisonor! Take them back to their cell.");
+
+        printf("You have found the escaped prisonor! Take them back to their cell.\n");
+        game_won();
     } else {
         printf("There is no-one here\n");
         room_guardroom();
@@ -100,18 +44,11 @@ void search() {
 void hiding_loop() {
     HAVE_BEEN_HIDING = true;
     int counter = 0;
-    char *scenario;
     while (file_exists("location.txt") && counter < 2) {
-        scenario = "The screams are quieter.";
-        printf("%s\n", scenario);
+        printf("The screams are quieter.\n");
         Sleep(500);
         counter++;
     }
-}
-
-void game_lost(char *scenario) {
-    printf("%s\n", scenario);
-    play_again();
 }
 
 void hide();
@@ -133,15 +70,16 @@ Scenario Scenario_In_hiding = {
     }};
 
 void hide() {
-    char *description = "You are hiding in the guardroom";
-    printf("%s.\n", description);
+    printf("You are hiding in the guardroom.\n");
     write_location("guardroom");
+
     hiding_loop();
 
     if (file_exists("location.txt")) {
         scenario(&Scenario_In_hiding);
     } else {
-        game_lost("You realize the room is not empty any more. A guard appears and captures you. Soon you find yourself back in your cell, feeling miserable that your escape attempt failed.");
+        printf("You realize the room is not empty any more. A guard appears and captures you. Soon you find yourself back in your cell, feeling miserable that your escape attempt failed.\n");
+        game_lost();
     }
 }
 
@@ -171,7 +109,8 @@ void room_guardroom() {
 }
 
 void room_upstairs() {
-    game_won("The stairs lead to the dungeon exit. Your friend Freija the Magnificent Warrior runs towards you and embraces you. 'I am here to rescue you!' she says.");
+    printf("The stairs lead to the dungeon exit. Your friend Freija the Magnificent Warrior runs towards you and embraces you. 'I am here to rescue you!' she says.\n");
+    game_won();
 }
 
 Scenario Scenario_Left_corridor = {
@@ -198,7 +137,8 @@ void room_left_corridor() {
 }
 
 void fight_man() {
-    game_lost("Unfortunately you lose the fight and fall to the floor dead.");
+    printf("Unfortunately you lose the fight and fall to the floor dead.\n");
+    game_lost();
 }
 
 Scenario Scenario_Right_corridor = {

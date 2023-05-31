@@ -1,6 +1,8 @@
 #ifndef SCENARIO_H
 #define SCENARIO_H
 
+extern int input_command(char *allowed);
+
 #define MAX_SCENARIO_DESCRIPTION 190
 #define MAX_CHOICES 10
 #define MAX_CHOICE_DESCRIPTION 40

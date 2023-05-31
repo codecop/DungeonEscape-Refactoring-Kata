@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h> // strcat
 
-int input_command(char *allowed);
+extern int input_command(char *allowed);
 
 char choices_description_buffer[MAX_CHOICES * MAX_CHOICE_DESCRIPTION + 1];
 char choices_key_buffer[MAX_CHOICES * 1 + 1];
