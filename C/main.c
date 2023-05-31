@@ -9,7 +9,7 @@
 
 bool HAVE_BEEN_HIDING = false;
 
-void room_in_a_cell();
+void start_game();
 
 void room_right_corridor();
 
@@ -30,9 +30,7 @@ void delete_location() {
     remove("location.txt");
 }
 
-void quit(char *message) {
-    printf("Quit\n");
-    printf(message);
+void quit() {
     exit(0);
 }
 
@@ -51,7 +49,8 @@ int input_command(char *allowed) {
             case 10:
                 break;
             case 'q':
-                quit("");
+                printf("Quit\n");
+                quit();
                 break;
             default:
                 unexpected_input(command);
@@ -61,18 +60,24 @@ int input_command(char *allowed) {
     return command;
 }
 
+Scenario Scenario_Play_again = {
+    .description = "Play again? y/n",
+    .number_of_choices = 2,
+    .choices = {
+        {
+            .key_to_press = 'y',
+            .action = "play again",
+            .next_scenario = start_game,
+        },
+        {
+            .key_to_press = 'n',
+            .action = "Quit\nThankyou for playing",
+            .next_scenario = quit,
+        },
+    }};
+
 void play_again() {
-    printf("Play again? y/n\n");
-    int command = input_command("yn");
-    switch (command) {
-        case 'y':
-            printf("play again\n");
-            room_in_a_cell();
-            break;
-        case 'n':
-            quit("Thankyou for playing");
-            break;
-    }
+    scenario(&Scenario_Play_again);
 }
 
 void game_won(char *scenario) {
@@ -87,8 +92,7 @@ void search() {
         delete_location();
         game_won("You have found the escaped prisonor! Take them back to their cell.");
     } else {
-        scenario = "There is no-one here";
-        printf("%s\n", scenario);
+        printf("There is no-one here\n");
         room_guardroom();
     }
 }
@@ -239,6 +243,8 @@ void room_corridor_outside_cell() {
     scenario(&Scenario_Corridor_outside_cell);
 }
 
+void room_in_a_cell();
+
 Scenario Scenario_In_a_cell = {
     .description = "You are standing in a cell in the dungeon. The recent earthquake has broken the door",
     .number_of_choices = 2,
@@ -257,10 +263,14 @@ void room_in_a_cell() {
     scenario(&Scenario_In_a_cell);
 }
 
+void start_game() {
+    room_in_a_cell();
+}
+
 int main() {
     printf("Press q to quit at any time.\n\n");
 
-    room_in_a_cell();
+    start_game();
 
     return 0;
 }

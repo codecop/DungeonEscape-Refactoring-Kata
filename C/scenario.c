@@ -9,13 +9,20 @@ char choices_description_buffer[MAX_CHOICES * MAX_CHOICE_DESCRIPTION + 1];
 char choices_key_buffer[MAX_CHOICES * 1 + 1];
 char choice_action_buffer[MAX_CHOICE_DESCRIPTION + 1];
 
+int string_not_empty(const char *string) {
+    return string && string[0] != '\0';
+}
+
 const char *scenario_describe(const Scenario *const scenario) {
     return scenario->description;
 }
 
 void choice_describe(const Choice *const choice) {
-    strcat(choices_description_buffer, "\n\t ");
-    strcat(choices_description_buffer, choice->description);
+    const char *description = choice->description;
+    if (string_not_empty(description)) {
+        strcat(choices_description_buffer, "\n\t ");
+        strcat(choices_description_buffer, description);
+    }
 }
 
 const char *scenario_describe_choices(const Scenario *const scenario) {
@@ -37,6 +44,7 @@ char choice_key_from_description(const char *description) {
 char choice_get_key(const Choice *const choice) {
     char key = choice->key_to_press;
     if (key == 0) {
+        assert(choice->description);
         key = choice_key_from_description(choice->description);
     }
     return key;
@@ -70,6 +78,7 @@ char *choice_action_from_description(const char *description) {
 void choice_execute(const Choice *const choice) {
     char *action = choice->action;
     if (action == NULL || action[0] == '\0') {
+        assert(choice->description);
         action = choice_action_from_description(choice->description);
     }
     printf("%s\n", action);
@@ -89,7 +98,11 @@ void scenario_execute_choice(const Scenario *const scenario, int command) {
 void scenario(const Scenario *const scenario) {
     const char *description = scenario_describe(scenario);
     const char *choices = scenario_describe_choices(scenario);
-    printf("%s. Would you like to:%s\n\n", description, choices);
+    if (string_not_empty(choices)) {
+        printf("%s. Would you like to:%s\n\n", description, choices);
+    } else {
+        printf("%s\n", description);
+    }
 
     char *choice_keys = scenario_list_choice_keys(scenario);
     int command = input_command(choice_keys);

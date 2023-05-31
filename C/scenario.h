@@ -6,9 +6,9 @@
 #define MAX_CHOICE_DESCRIPTION 40
 
 typedef struct Choice {
-    char description[MAX_CHOICE_DESCRIPTION + 1];
-    char key_to_press;
-    char *action; // can be omitted/null
+    char description[MAX_CHOICE_DESCRIPTION + 1]; // can be omitted/null
+    char key_to_press; // can be omitted/null - derived from description
+    char *action; // can be omitted/null - derived from description
     void (*next_scenario)(void);
 } Choice;
 
