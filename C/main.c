@@ -216,26 +216,29 @@ void room_right_corridor() {
     }
 }
 
+Scenario Scenario_Corridor_outside_cell = {
+    .description = "You are standing in a corridor in the dungeon. To the left you can see a torch burning and some steps. To the right it is dark and you hear screams",
+    .number_of_choices = 2,
+    .choices = {
+        {
+            .description = "go (l)eft",
+            .key_to_press = 'l',
+            .action = "go left",
+            .next_scenario = room_left_corridor,
+        },
+        {
+            .description = "go (r)ight",
+            .key_to_press = 'r',
+            .action = "go right",
+            .next_scenario = room_right_corridor,
+        },
+    }};
+
 void room_corridor_outside_cell() {
-    char *scenario = "You are standing in a corridor in the dungeon. To the left you can see a torch burning and some steps. To the right it is dark and you hear screams";
-    char *choices = "\n\t go (l)eft\n\t go (r)ight";
-    printf("%s. Would you like to:%s\n\n", scenario, choices);
-
-    int command = input_command("lr");
-
-    switch (command) {
-        case 'l':
-            printf("go left\n");
-            room_left_corridor();
-            break;
-        case 'r':
-            printf("go right\n");
-            room_right_corridor();
-            break;
-    }
+    scenario(&Scenario_Corridor_outside_cell);
 }
 
-Scenario Scenario_in_a_cell = {
+Scenario Scenario_In_a_cell = {
     .description = "You are standing in a cell in the dungeon. The recent earthquake has broken the door",
     .number_of_choices = 2,
     .choices = {
@@ -254,7 +257,7 @@ Scenario Scenario_in_a_cell = {
     }};
 
 void room_in_a_cell() {
-    scenario(&Scenario_in_a_cell);
+    scenario(&Scenario_In_a_cell);
 }
 
 int main() {
