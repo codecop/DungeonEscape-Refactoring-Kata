@@ -58,12 +58,12 @@ Scenario Scenario_In_hiding = {
         {
             .description = "go back (o)ut of the guardroom",
             .action = "out of the guardroom",
-            .next_scenario = room_right_corridor,
+            .next_method = room_right_corridor,
         },
         {
             .description = "Continue (h)iding",
             .action = "hide",
-            .next_scenario = hide,
+            .next_method = hide,
         },
     }};
 
@@ -88,17 +88,17 @@ Scenario Scenario_Guardroom = {
         {
             .description = "go back (o)ut of the guardroom",
             .action = "out of the guardroom",
-            .next_scenario = room_right_corridor,
+            .next_method = room_right_corridor,
         },
         {
             .description = "(h)ide in the guardroom",
             .action = "hide",
-            .next_scenario = hide,
+            .next_method = hide,
         },
         {
             .description = "(s)earch the guardroom",
             .action = "search",
-            .next_scenario = search,
+            .next_method = search,
         },
     }};
 
@@ -118,15 +118,15 @@ Scenario Scenario_Left_corridor = {
         {
             .description = "go (u)p the stairs",
             .action = "up the stairs",
-            .next_scenario = room_upstairs,
+            .next_method = room_upstairs,
         },
         {
             .description = "go (b)ack",
-            .next_scenario = room_right_corridor,
+            .next_method = room_right_corridor,
         },
         {
             .description = "go (t)hrough the door",
-            .next_scenario = room_guardroom,
+            .next_method = room_guardroom,
         },
     }};
 
@@ -146,12 +146,12 @@ Scenario Scenario_Right_corridor = {
         {
             .description = "(r)un the other way",
             .action = "run",
-            .next_scenario = room_left_corridor,
+            .next_method = room_left_corridor,
         },
         {
             .description = "(f)ight him",
             .action = "fight",
-            .next_scenario = fight_man,
+            .next_method = fight_man,
         },
     }};
 
@@ -169,11 +169,11 @@ Scenario Scenario_Corridor_outside_cell = {
     .choices = {
         {
             .description = "go (l)eft",
-            .next_scenario = room_left_corridor,
+            .next_method = room_left_corridor,
         },
         {
             .description = "go (r)ight",
-            .next_scenario = room_right_corridor,
+            .next_method = room_right_corridor,
         },
     }};
 
@@ -189,11 +189,11 @@ Scenario Scenario_In_a_cell = {
     .choices = {
         {
             .description = "(s)tay in the cell",
-            .next_scenario = room_in_a_cell,
+            .next_method = room_in_a_cell,
         },
         {
             .description = "go through the (d)oor",
-            .next_scenario = room_corridor_outside_cell,
+            .next_method = room_corridor_outside_cell,
         },
     }};
 

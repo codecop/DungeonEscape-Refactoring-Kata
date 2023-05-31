@@ -9,9 +9,10 @@ extern int input_command(char *allowed);
 
 typedef struct Choice {
     char description[MAX_CHOICE_DESCRIPTION + 1]; // can be omitted/null
-    char key_to_press; // can be omitted/null - derived from description
-    char *action; // can be omitted/null - derived from description
-    void (*next_scenario)(void);
+    char key_to_press;                            // can be omitted/null - derived from description
+    char *action;                                 // can be omitted/null - derived from description
+    void (*next_method)(void);                    // can be omitted/null
+    struct Scenario *next_scenario;               // can be omitted/null
 } Choice;
 
 typedef struct Scenario {

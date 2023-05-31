@@ -82,7 +82,12 @@ void choice_execute(const Choice *const choice) {
         action = choice_action_from_description(choice->description);
     }
     printf("%s\n", action);
-    choice->next_scenario();
+    if (choice->next_method) {
+        choice->next_method();
+    }
+    if (choice->next_scenario) {
+        scenario(choice->next_scenario);
+    }
 }
 
 void scenario_execute_choice(const Scenario *const scenario, int command) {

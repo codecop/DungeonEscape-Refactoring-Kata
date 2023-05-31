@@ -43,12 +43,12 @@ Scenario Scenario_Play_again = {
         {
             .key_to_press = 'y',
             .action = "play again",
-            .next_scenario = first_scenario,
+            .next_method = first_scenario,
         },
         {
             .key_to_press = 'n',
             .action = "Quit\nThankyou for playing",
-            .next_scenario = quit,
+            .next_method = quit,
         },
     }};
 
