@@ -141,30 +141,29 @@ void hide() {
     }
 }
 
-void room_guardroom() {
-    char *scenario = "You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out";
-    char *choices = "\n\t go back (o)ut of the guardroom\n\t (h)ide in the guardroom\n\t (s)earch the guardroom";
-    printf("%s. Would you like to:%s\n\n", scenario, choices);
+Scenario Scenario_Guardroom = {
+    .description = "You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out",
+    .number_of_choices = 3,
+    .choices = {
+        {
+            .description = "go back (o)ut of the guardroom",
+            .action = "out of the guardroom",
+            .next_scenario = room_right_corridor,
+        },
+        {
+            .description = "(h)ide in the guardroom",
+            .action = "hide",
+            .next_scenario = hide,
+        },
+        {
+            .description = "(s)earch the guardroom",
+            .action = "search",
+            .next_scenario = search,
+        },
+    }};
 
-    int command;
-    while (true) {
-        command = input_command("ohs");
-        if (command == 'o') {
-            printf("out of the guardroom\n");
-            room_right_corridor();
-            break;
-        }
-        switch (command) {
-            case 'h':
-                printf("hide\n");
-                hide();
-                break;
-            case 's':
-                printf("search\n");
-                search();
-                break;
-        }
-    }
+void room_guardroom() {
+    scenario(&Scenario_Guardroom);
 }
 
 void room_upstairs() {
