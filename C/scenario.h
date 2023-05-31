@@ -18,6 +18,6 @@ typedef struct Scenario {
     Choice choices[MAX_CHOICES];
 } Scenario;
 
-void scenario(Scenario *scenario);
+void scenario(const Scenario *const scenario);
 
 #endif // SCENARIO_H

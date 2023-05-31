@@ -1,3 +1,4 @@
+#include "scenario.h"
 #include <ctype.h>
 #include <stdbool.h> // bool type
 #include <stdio.h>
@@ -5,7 +6,6 @@
 #include <string.h>   // strchr
 #include <sys/stat.h> // stat
 #include <windows.h>
-#include "scenario.h"
 
 bool HAVE_BEEN_HIDING = false;
 
