@@ -251,7 +251,6 @@ Scenario Scenario_In_a_cell = {
         {
             .description = "go through the (d)oor",
             .key_to_press = 'd',
-            .action = "go through the door",
             .next_scenario = room_corridor_outside_cell,
         },
     }};

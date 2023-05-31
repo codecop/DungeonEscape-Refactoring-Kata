@@ -8,7 +8,7 @@
 typedef struct Choice {
     char description[MAX_CHOICE_DESCRIPTION + 1];
     char key_to_press;
-    char *action;
+    char *action; // can be omitted/null
     void (*next_scenario)(void);
 } Choice;
 
