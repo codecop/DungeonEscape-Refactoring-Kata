@@ -81,8 +81,8 @@ void game_won(char *scenario) {
 }
 
 void search() {
-    char *scenario = "You are searching the guardroom.";
-    printf("%s\n", scenario);
+    char *scenario = "You are searching the guardroom";
+    printf("%s.\n", scenario);
     if (file_exists("location.txt")) {
         delete_location();
         game_won("You have found the escaped prisonor! Take them back to their cell.");
@@ -110,32 +110,32 @@ void game_lost(char *scenario) {
     play_again();
 }
 
+void hide();
+
+Scenario Scenario_In_hiding = {
+    .description = "You are hiding in the guardroom",
+    .number_of_choices = 2,
+    .choices = {
+        {
+            .description = "go back (o)ut of the guardroom",
+            .action = "out of the guardroom",
+            .next_scenario = room_right_corridor,
+        },
+        {
+            .description = "Continue (h)iding",
+            .action = "hide",
+            .next_scenario = hide,
+        },
+    }};
+
 void hide() {
-    char *scenario = "You are hiding in the guardroom.";
-    printf("%s\n", scenario);
+    char *description = "You are hiding in the guardroom";
+    printf("%s.\n", description);
     write_location("guardroom");
     hiding_loop();
+
     if (file_exists("location.txt")) {
-        scenario = "You are hiding in the guardroom";
-        char *choices = "\n\t go back (o)ut of the guardroom\n\t Continue (h)iding";
-        printf("%s. Would you like to:%s\n\n", scenario, choices);
-
-        int command = input_command("oh");
-
-        switch (command) {
-            case 'o':
-                printf("out of the guardroom\n");
-                if (HAVE_BEEN_HIDING) {
-                    delete_location();
-                }
-                room_right_corridor();
-                break;
-            case 'h':
-                printf("hide\n");
-                hide();
-                break;
-        }
-
+        scenario(&Scenario_In_hiding);
     } else {
         game_lost("You realize the room is not empty any more. A guard appears and captures you. Soon you find yourself back in your cell, feeling miserable that your escape attempt failed.");
     }
@@ -151,9 +151,6 @@ void room_guardroom() {
         command = input_command("ohs");
         if (command == 'o') {
             printf("out of the guardroom\n");
-            if (HAVE_BEEN_HIDING) {
-                delete_location();
-            }
             room_right_corridor();
             break;
         }
@@ -174,46 +171,55 @@ void room_upstairs() {
     game_won("The stairs lead to the dungeon exit. Your friend Freija the Magnificent Warrior runs towards you and embraces you. 'I am here to rescue you!' she says.");
 }
 
+Scenario Scenario_Left_corridor = {
+    .description = "You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you",
+    .number_of_choices = 3,
+    .choices = {
+        {
+            .description = "go (u)p the stairs",
+            .action = "up the stairs",
+            .next_scenario = room_upstairs,
+        },
+        {
+            .description = "go (b)ack",
+            .next_scenario = room_right_corridor,
+        },
+        {
+            .description = "go (t)hrough the door",
+            .next_scenario = room_guardroom,
+        },
+    }};
+
 void room_left_corridor() {
-    char *scenario = "You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you";
-    char *choices = "\n\t go (u)p the stairs\n\t go (b)ack\n\t go (t)hrough the door";
-    printf("%s. Would you like to:%s\n\n", scenario, choices);
-
-    int command = input_command("ubt");
-
-    switch (command) {
-        case 'u':
-            printf("up the stairs\n");
-            room_upstairs();
-            break;
-        case 'b':
-            printf("go back\n");
-            room_right_corridor();
-            break;
-        case 't':
-            printf("go through the door\n");
-            room_guardroom();
-            break;
-    }
+    scenario(&Scenario_Left_corridor);
 }
 
+void fight_man() {
+    game_lost("Unfortunately you lose the fight and fall to the floor dead.");
+}
+
+Scenario Scenario_Right_corridor = {
+    .description = "You are standing in a corridor in the dungeon. It is very dark. A man runs towards you screaming, carrying a big sword",
+    .number_of_choices = 2,
+    .choices = {
+        {
+            .description = "(r)un the other way",
+            .action = "run",
+            .next_scenario = room_left_corridor,
+        },
+        {
+            .description = "(f)ight him",
+            .action = "fight",
+            .next_scenario = fight_man,
+        },
+    }};
+
 void room_right_corridor() {
-    char *scenario = "You are standing in a corridor in the dungeon. It is very dark. A man runs towards you screaming, carrying a big sword";
-    char *choices = "\n\t (r)un the other way\n\t (f)ight him";
-    printf("%s. Would you like to:%s\n\n", scenario, choices);
-
-    int command = input_command("rf");
-
-    switch (command) {
-        case 'r':
-            printf("run\n");
-            room_left_corridor();
-            break;
-        case 'f':
-            printf("fight\n");
-            game_lost("Unfortunately you lose the fight and fall to the floor dead.");
-            break;
+    if (HAVE_BEEN_HIDING) {
+        delete_location();
     }
+
+    scenario(&Scenario_Right_corridor);
 }
 
 Scenario Scenario_Corridor_outside_cell = {
@@ -222,14 +228,10 @@ Scenario Scenario_Corridor_outside_cell = {
     .choices = {
         {
             .description = "go (l)eft",
-            .key_to_press = 'l',
-            .action = "go left",
             .next_scenario = room_left_corridor,
         },
         {
             .description = "go (r)ight",
-            .key_to_press = 'r',
-            .action = "go right",
             .next_scenario = room_right_corridor,
         },
     }};
@@ -244,14 +246,10 @@ Scenario Scenario_In_a_cell = {
     .choices = {
         {
             .description = "(s)tay in the cell",
-            .key_to_press = 's',
-            .action = "stay in the cell",
             .next_scenario = room_in_a_cell,
         },
         {
             .description = "go through the (d)oor",
-            // .key_to_press = '\0',
-            // .action = 0,
             .next_scenario = room_corridor_outside_cell,
         },
     }};

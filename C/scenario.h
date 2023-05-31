@@ -1,7 +1,7 @@
 #ifndef SCENARIO_H
 #define SCENARIO_H
 
-#define MAX_SCENARIO_DESCRIPTION 150
+#define MAX_SCENARIO_DESCRIPTION 160
 #define MAX_CHOICES 10
 #define MAX_CHOICE_DESCRIPTION 40
 
@@ -13,7 +13,7 @@ typedef struct Choice {
 } Choice;
 
 typedef struct Scenario {
-    char description[MAX_SCENARIO_DESCRIPTION];
+    char description[MAX_SCENARIO_DESCRIPTION + 1];
     int number_of_choices;
     Choice choices[MAX_CHOICES];
 } Scenario;
