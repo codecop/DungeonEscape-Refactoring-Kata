@@ -237,17 +237,28 @@ void room_corridor_outside_cell() {
 #define MAX_CHOICES 10
 
 typedef struct Choice {
-    char *description;
+    char description[40];
     char key_to_press;
     char *action;
     void (*next_scenario)(void);
 } Choice;
 
 typedef struct Scenario {
-    char *description;
+    char description[100];
     int number_of_choices;
     Choice choices[MAX_CHOICES];
 } Scenario;
+
+char choices_buffer[MAX_CHOICES * 40];
+
+char *create_choices(Scenario *scenario) {
+    choices_buffer[0] = 0;
+    for (int i = 0; i < scenario->number_of_choices; i++) {
+        strcat(choices_buffer, "\n\t ");
+        strcat(choices_buffer, scenario->choices[i].description);
+    }
+    return choices_buffer;
+}
 
 Scenario R_in_cell = {
     .description = "You are standing in a cell in the dungeon. The recent earthquake has broken the door",
@@ -269,7 +280,7 @@ Scenario R_in_cell = {
 
 void room_in_a_cell() {
     char *scenario = R_in_cell.description;
-    char *choices = "\n\t (s)tay in the cell\n\t go through the (d)oor";
+    char *choices = create_choices(&R_in_cell);
     printf("%s. Would you like to:%s\n\n", scenario, choices);
 
     int command = input_command("sd");
