@@ -5,6 +5,7 @@
 #include <string.h>   // strchr
 #include <sys/stat.h> // stat
 #include <windows.h>
+#include "scenario.h"
 
 bool HAVE_BEEN_HIDING = false;
 
@@ -232,67 +233,6 @@ void room_corridor_outside_cell() {
             room_right_corridor();
             break;
     }
-}
-
-#define MAX_SCENARIO_DESCRIPTION 100
-#define MAX_CHOICES 10
-#define MAX_CHOICE_DESCRIPTION 40
-
-typedef struct Choice {
-    char description[MAX_CHOICE_DESCRIPTION + 1];
-    char key_to_press;
-    char *action;
-    void (*next_scenario)(void);
-} Choice;
-
-typedef struct Scenario {
-    char description[MAX_SCENARIO_DESCRIPTION];
-    int number_of_choices;
-    Choice choices[MAX_CHOICES];
-} Scenario;
-
-char *scenario_describe(Scenario *scenario) {
-    return scenario->description;
-}
-
-char choices_description_buffer[MAX_CHOICES * MAX_CHOICE_DESCRIPTION + 1];
-
-char *scenario_describe_choices(Scenario *scenario) {
-    choices_description_buffer[0] = 0;
-    for (int i = 0; i < scenario->number_of_choices; i++) {
-        strcat(choices_description_buffer, "\n\t ");
-        strcat(choices_description_buffer, scenario->choices[i].description);
-    }
-    return choices_description_buffer;
-}
-
-char choices_key_buffer[MAX_CHOICES * 1 + 1];
-
-char *scenario_list_choice_keys(Scenario *scenario) {
-    choices_key_buffer[0] = 0;
-    for (int i = 0; i < scenario->number_of_choices; i++) {
-        choices_key_buffer[i] = scenario->choices[i].key_to_press;
-        choices_key_buffer[i + 1] = 0;
-    }
-    return choices_key_buffer;
-}
-
-void scenario_execute_choice(Scenario *scenario, int command) {
-    for (int i = 0; i < scenario->number_of_choices; i++) {
-        if (command == scenario->choices[i].key_to_press) {
-            printf("%s\n", scenario->choices[i].action);
-            scenario->choices[i].next_scenario();
-            break;
-        }
-    }
-}
-
-void scenario(Scenario *scenario) {
-    char *description = scenario_describe(scenario);
-    char *choices = scenario_describe_choices(scenario);
-    printf("%s. Would you like to:%s\n\n", description, choices);
-    int command = input_command(scenario_list_choice_keys(scenario));
-    scenario_execute_choice(scenario, command);
 }
 
 Scenario Scenario_in_a_cell = {
