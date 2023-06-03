@@ -80,29 +80,29 @@ void hide() {
     }
 }
 
-Scenario Scenario_Guardroom = {
-    .description = "You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out",
-    .number_of_choices = 3,
-    .choices = {
-        {
-            .description = "go back (o)ut of the guardroom",
-            .action = "out of the guardroom",
-            .next_method = room_right_corridor,
-        },
-        {
-            .description = "(h)ide in the guardroom",
-            .action = "hide",
-            .next_method = hide,
-        },
-        {
-            .description = "(s)earch the guardroom",
-            .action = "search",
-            .next_method = search,
-        },
-    }};
-
 void room_guardroom() {
-    game_execute_scenario(&Scenario_Guardroom);
+    Scenario scenario = {
+        .description = "You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out",
+        .number_of_choices = 3,
+        .choices = {
+            {
+                .description = "go back (o)ut of the guardroom",
+                .action = "out of the guardroom",
+                .next_method = room_right_corridor,
+            },
+            {
+                .description = "(h)ide in the guardroom",
+                .action = "hide",
+                .next_method = hide,
+            },
+            {
+                .description = "(s)earch the guardroom",
+                .action = "search",
+                .next_method = search,
+            },
+        }};
+
+    game_execute_scenario(&scenario);
 }
 
 void room_upstairs() {
@@ -110,27 +110,27 @@ void room_upstairs() {
     game_won();
 }
 
-Scenario Scenario_Left_corridor = {
-    .description = "You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you",
-    .number_of_choices = 3,
-    .choices = {
-        {
-            .description = "go (u)p the stairs",
-            .action = "up the stairs",
-            .next_method = room_upstairs,
-        },
-        {
-            .description = "go (b)ack",
-            .next_method = room_right_corridor,
-        },
-        {
-            .description = "go (t)hrough the door",
-            .next_method = room_guardroom,
-        },
-    }};
-
 void room_left_corridor() {
-    game_execute_scenario(&Scenario_Left_corridor);
+    Scenario scenario = {
+        .description = "You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you",
+        .number_of_choices = 3,
+        .choices = {
+            {
+                .description = "go (u)p the stairs",
+                .action = "up the stairs",
+                .next_method = room_upstairs,
+            },
+            {
+                .description = "go (b)ack",
+                .next_method = room_right_corridor,
+            },
+            {
+                .description = "go (t)hrough the door",
+                .next_method = room_guardroom,
+            },
+        }};
+
+    game_execute_scenario(&scenario);
 }
 
 void fight_man() {
@@ -162,50 +162,46 @@ void room_right_corridor() {
     game_execute_scenario(&Scenario_Right_corridor);
 }
 
-Scenario Scenario_Corridor_outside_cell = {
-    .description = "You are standing in a corridor in the dungeon. To the left you can see a torch burning and some steps. To the right it is dark and you hear screams",
-    .number_of_choices = 2,
-    .choices = {
-        {
-            .description = "go (l)eft",
-            .next_method = room_left_corridor,
-        },
-        {
-            .description = "go (r)ight",
-            .next_method = room_right_corridor,
-        },
-    }};
-
 void room_corridor_outside_cell() {
-    game_execute_scenario(&Scenario_Corridor_outside_cell);
+    Scenario scenario = {
+        .description = "You are standing in a corridor in the dungeon. To the left you can see a torch burning and some steps. To the right it is dark and you hear screams",
+        .number_of_choices = 2,
+        .choices = {
+            {
+                .description = "go (l)eft",
+                .next_method = room_left_corridor,
+            },
+            {
+                .description = "go (r)ight",
+                .next_method = room_right_corridor,
+            },
+        }};
+
+    game_execute_scenario(&scenario);
 }
 
 void room_in_a_cell();
 
-Scenario Scenario_In_a_cell = {
-    .description = "You are standing in a cell in the dungeon. The recent earthquake has broken the door",
-    .number_of_choices = 2,
-    .choices = {
-        {
-            .description = "(s)tay in the cell",
-            .next_method = room_in_a_cell,
-        },
-        {
-            .description = "go through the (d)oor",
-            .next_method = room_corridor_outside_cell,
-        },
-    }};
-
 void room_in_a_cell() {
-    game_execute_scenario(&Scenario_In_a_cell);
-}
+    Scenario scenario = {
+        .description = "You are standing in a cell in the dungeon. The recent earthquake has broken the door",
+        .number_of_choices = 2,
+        .choices = {
+            {
+                .description = "(s)tay in the cell",
+                .next_method = room_in_a_cell,
+            },
+            {
+                .description = "go through the (d)oor",
+                .next_method = room_corridor_outside_cell,
+            },
+        }};
 
-void first_scenario() {
-    room_in_a_cell();
+    game_execute_scenario(&scenario);
 }
 
 int main() {
-    game_start();
+    game_start(room_in_a_cell);
 
     return 0;
 }

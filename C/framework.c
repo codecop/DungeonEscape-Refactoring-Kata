@@ -5,6 +5,8 @@
 #include <stdlib.h> // exit
 #include <string.h> // strchr
 
+void (*first_scenario)(void) = NULL;
+
 void _game_quit(void) {
     exit(0);
 }
@@ -35,23 +37,9 @@ int _game_input_command(char *allowed) {
     return command;
 }
 
-extern void first_scenario(void);
-
-Scenario Scenario_Play_again = {
-    .description = "Play again? y/n",
-    .number_of_choices = 2,
-    .choices = {
-        {
-            .key_to_press = 'y',
-            .action = "play again",
-            .next_method = first_scenario,
-        },
-        {
-            .key_to_press = 'n',
-            .action = "Quit\nThankyou for playing",
-            .next_method = _game_quit,
-        },
-    }};
+void _game_first_scenario(void) {
+    first_scenario();
+}
 
 void game_execute_scenario(const Scenario *const scenario) {
     scenario_introduce(scenario);
@@ -63,13 +51,30 @@ void game_execute_scenario(const Scenario *const scenario) {
     scenario_execute_choice(scenario, command);
 }
 
-void game_start(void) {
+void game_start(void (*first_room)(void)) {
     printf("Press q to quit at any time.\n\n");
-    first_scenario();
+    first_scenario = first_room;
+    _game_first_scenario();
 }
 
 void _game_play_again(void) {
-    game_execute_scenario(&Scenario_Play_again);
+    Scenario scenario = {
+        .description = "Play again? y/n",
+        .number_of_choices = 2,
+        .choices = {
+            {
+                .key_to_press = 'y',
+                .action = "play again",
+                .next_method = _game_first_scenario,
+            },
+            {
+                .key_to_press = 'n',
+                .action = "Quit\nThankyou for playing",
+                .next_method = _game_quit,
+            },
+        }};
+
+    game_execute_scenario(&scenario);
 }
 
 void game_won(void) {
