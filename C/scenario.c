@@ -1,22 +1,18 @@
 #include "scenario.h"
-#include <assert.h>
 #include <stdio.h>
-#include <string.h> // strcat
-
-extern int input_command(char *allowed);
 
 char choices_description_buffer[SCENARIO_MAX_CHOICES * CHOICE_MAX_DESCRIPTION + 1];
 char choices_key_buffer[SCENARIO_MAX_CHOICES * 1 + 1];
 
-int scenario_string_not_empty(const char *string) {
+int _scenario_string_not_empty(const char *string) {
     return string && string[0] != '\0';
 }
 
-const char *scenario_describe(const Scenario *const scenario) {
+const char *_scenario_describe(const Scenario *const scenario) {
     return scenario->description;
 }
 
-const char *scenario_describe_choices(const Scenario *const scenario) {
+const char *_scenario_describe_choices(const Scenario *const scenario) {
     choices_description_buffer[0] = '\0';
     for (int i = 0; i < scenario->number_of_choices; i++) {
         const Choice *const choice = &scenario->choices[i];
@@ -26,9 +22,9 @@ const char *scenario_describe_choices(const Scenario *const scenario) {
 }
 
 void scenario_introduce(const Scenario *const scenario) {
-    const char *description = scenario_describe(scenario);
-    const char *choices = scenario_describe_choices(scenario);
-    if (scenario_string_not_empty(choices)) {
+    const char *description = _scenario_describe(scenario);
+    const char *choices = _scenario_describe_choices(scenario);
+    if (_scenario_string_not_empty(choices)) {
         printf("%s. Would you like to:%s\n\n", description, choices);
     } else {
         printf("%s\n", description);
@@ -50,9 +46,9 @@ void scenario_execute_choice(const Scenario *const scenario, int choice_key) {
         const Choice *const choice = &scenario->choices[i];
         if (choice_key == choice_get_key(choice)) {
             choice_execute(choice);
-            if (choice->next_scenario) {
-                // TODO scenario_execute(choice->next_scenario);
-            }
+            // if (choice->next_scenario) {
+            //     // TODO scenario_execute(choice->next_scenario);
+            // }
             break;
         }
     }

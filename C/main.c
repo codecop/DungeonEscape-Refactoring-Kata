@@ -73,7 +73,7 @@ void hide() {
     hiding_loop();
 
     if (file_exists("location.txt")) {
-        execute_scenario(&Scenario_In_hiding);
+        game_execute_scenario(&Scenario_In_hiding);
     } else {
         printf("You realize the room is not empty any more. A guard appears and captures you. Soon you find yourself back in your cell, feeling miserable that your escape attempt failed.\n");
         game_lost();
@@ -102,7 +102,7 @@ Scenario Scenario_Guardroom = {
     }};
 
 void room_guardroom() {
-    execute_scenario(&Scenario_Guardroom);
+    game_execute_scenario(&Scenario_Guardroom);
 }
 
 void room_upstairs() {
@@ -130,7 +130,7 @@ Scenario Scenario_Left_corridor = {
     }};
 
 void room_left_corridor() {
-    execute_scenario(&Scenario_Left_corridor);
+    game_execute_scenario(&Scenario_Left_corridor);
 }
 
 void fight_man() {
@@ -159,7 +159,7 @@ void room_right_corridor() {
         delete_location();
     }
 
-    execute_scenario(&Scenario_Right_corridor);
+    game_execute_scenario(&Scenario_Right_corridor);
 }
 
 Scenario Scenario_Corridor_outside_cell = {
@@ -177,7 +177,7 @@ Scenario Scenario_Corridor_outside_cell = {
     }};
 
 void room_corridor_outside_cell() {
-    execute_scenario(&Scenario_Corridor_outside_cell);
+    game_execute_scenario(&Scenario_Corridor_outside_cell);
 }
 
 void room_in_a_cell();
@@ -197,7 +197,7 @@ Scenario Scenario_In_a_cell = {
     }};
 
 void room_in_a_cell() {
-    execute_scenario(&Scenario_In_a_cell);
+    game_execute_scenario(&Scenario_In_a_cell);
 }
 
 void first_scenario() {
@@ -205,7 +205,7 @@ void first_scenario() {
 }
 
 int main() {
-    start_game();
+    game_start();
 
     return 0;
 }

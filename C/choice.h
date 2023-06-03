@@ -8,7 +8,7 @@ typedef struct Choice {
     char key_to_press;                            // can be omitted/null - derived from description
     char *action;                                 // can be omitted/null - derived from description
     void (*next_method)(void);                    // can be omitted/null
-    struct Scenario *next_scenario;               // can be omitted/null
+    // struct Scenario *next_scenario;               // can be omitted/null
 } Choice;
 
 void choice_describe(const Choice *const choice, char *choices_description_buffer);

@@ -5,19 +5,19 @@
 
 char choice_action_buffer[CHOICE_MAX_DESCRIPTION + 1];
 
-int string_not_empty(const char *string) {
+int _choice_string_not_empty(const char *string) {
     return string && string[0] != '\0';
 }
 
 void choice_describe(const Choice *const choice, char *choices_description_buffer) {
     const char *description = choice->description;
-    if (string_not_empty(description)) {
+    if (_choice_string_not_empty(description)) {
         strcat(choices_description_buffer, "\n\t ");
         strcat(choices_description_buffer, description);
     }
 }
 
-char choice_key_from_description(const char *description) {
+char _choice_key_from_description(const char *description) {
     const char *openingParentheses = strchr(description, '(');
     assert(openingParentheses != 0); // must have ()
     const char *characterPtr = openingParentheses + 1;
@@ -28,12 +28,12 @@ char choice_get_key(const Choice *const choice) {
     char key = choice->key_to_press;
     if (key == 0) {
         assert(choice->description);
-        key = choice_key_from_description(choice->description);
+        key = _choice_key_from_description(choice->description);
     }
     return key;
 }
 
-char *choice_action_from_description(const char *description) {
+char *_choice_action_from_description(const char *description) {
     size_t length = strlen(description);
     size_t index = 0;
 
@@ -52,7 +52,7 @@ void choice_execute(const Choice *const choice) {
     char *action = choice->action;
     if (action == NULL || action[0] == '\0') {
         assert(choice->description);
-        action = choice_action_from_description(choice->description);
+        action = _choice_action_from_description(choice->description);
     }
     printf("%s\n", action);
     if (choice->next_method) {
