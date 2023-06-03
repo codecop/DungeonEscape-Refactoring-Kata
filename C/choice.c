@@ -9,7 +9,15 @@ int _choice_string_not_empty(const char *string) {
     return string && string[0] != '\0';
 }
 
+bool choice_is_enabled(const Choice *const choice) {
+    return choice->is_enabled == NULL || choice->is_enabled();
+}
+
 void choice_describe(const Choice *const choice, char *choices_description_buffer) {
+    if (!choice_is_enabled(choice)) {
+        return;
+    }
+
     const char *description = choice->description;
     if (_choice_string_not_empty(description)) {
         strcat(choices_description_buffer, "\n\t ");

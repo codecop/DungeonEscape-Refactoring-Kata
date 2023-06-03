@@ -32,11 +32,17 @@ void scenario_introduce(const Scenario *const scenario) {
 }
 
 char *scenario_list_choice_keys(const Scenario *const scenario) {
-    choices_key_buffer[0] = '\0';
+    int choices = 0;
+    choices_key_buffer[choices] = '\0';
     for (int i = 0; i < scenario->number_of_choices; i++) {
         const Choice *const choice = &scenario->choices[i];
-        choices_key_buffer[i] = choice_get_key(choice);
-        choices_key_buffer[i + 1] = '\0';
+        if (!choice_is_enabled(choice)) {
+            continue;
+        }
+
+        choices_key_buffer[choices] = choice_get_key(choice);
+        choices_key_buffer[choices + 1] = '\0';
+        choices++;
     }
     return choices_key_buffer;
 }
