@@ -1,0 +1,31 @@
+Press q to quit at any time.
+
+You are standing in a cell in the dungeon. The recent earthquake has broken the door. Would you like to:
+	 (s)tay in the cell
+	 go through the (d)oor
+
+go through the door
+You are standing in a corridor in the dungeon. To the left you can see a torch burning and some steps. To the right it is dark and you hear screams. Would you like to:
+	 go (l)eft
+	 go (r)ight
+
+go left
+You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you. Would you like to:
+	 go (u)p the stairs
+	 go (b)ack
+	 go (t)hrough the door
+	 (p)ick up the torch
+
+pick up the torch
+The screaming man is in front of you, carrying a big sword. Would you like to:
+	 (r)un the other way
+	 (f)ight him with the torch
+
+fight
+The screaming man is scared off and runs up the stairs.
+You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you. Would you like to:
+	 go (u)p the stairs
+	 go (b)ack
+	 go (t)hrough the door
+
+Quit

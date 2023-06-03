@@ -109,3 +109,23 @@ tests:
       q
     stdout:
        file: smoke_tests/wander-around.txt
+
+  - name: "flee-die"
+    stdin: |
+      d
+      l
+      p
+      r
+      n
+    stdout:
+       file: smoke_tests/flee-die.txt
+
+  - name: "torch-fight-off"
+    stdin: |
+      d
+      l
+      p
+      f
+      q
+    stdout:
+       file: smoke_tests/torch-fight-off.txt

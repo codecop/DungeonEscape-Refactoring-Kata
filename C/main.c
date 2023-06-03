@@ -137,14 +137,7 @@ bool torch_is_here(void) {
 
 void torched_picked_up(void) {
     TORCH_IS_HERE = false;
-    /*
-        The hero should be able to pick up the torch and fight the screaming man with it.
-        Add an option to the 'left corridor' - (p)ick up the torch.
-        This should take you to a new list of options - the screaming man is in front of you.
-        Your choices are to run or fight him with the torch.
-        If you run, he kills you. If you fight, he is scared off and runs up the stairs,
-        leaving you back at the same 'left corridor' options menu minus the option to pick up the torch.
-    */
+
     Scenario scenario = {
         .description = "The screaming man is in front of you, carrying a big sword",
         .number_of_choices = 2,
