@@ -73,6 +73,17 @@ tests:
     stdout:
        file: smoke_tests/find-prisoner-win.txt
 
+  - name: "hide-captured"
+    command: start "searcher" cmd /C "type smoke_tests\find-prisoner_stdin.txt | DungeonEscape" && DungeonEscape
+    stdin: |
+      d
+      l
+      t
+      h
+      q
+    stdout:
+       file: smoke_tests/hide-captured.txt
+
   - name: "wander-around"
     stdin: |
       x
