@@ -53,7 +53,7 @@ Scenario Scenario_Play_again = {
     }};
 
 void play_again(void) {
-    scenario(&Scenario_Play_again);
+    scenario_execute(&Scenario_Play_again);
 }
 
 void game_won(void) {
