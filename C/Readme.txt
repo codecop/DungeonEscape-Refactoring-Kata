@@ -10,3 +10,4 @@ Working through the kata.
     - two scenarios with forks in them
     - one scenario with extra logic in method
 * 1h Fooling around, rename again and again, extract fork. No more ideas.
+* 0.5h new feature is just another two structs. WIN
