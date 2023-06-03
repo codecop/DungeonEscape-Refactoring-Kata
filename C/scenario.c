@@ -46,9 +46,6 @@ void scenario_execute_choice(const Scenario *const scenario, int choice_key) {
         const Choice *const choice = &scenario->choices[i];
         if (choice_key == choice_get_key(choice)) {
             choice_execute(choice);
-            // if (choice->next_scenario) {
-            //     // TODO scenario_execute(choice->next_scenario);
-            // }
             break;
         }
     }
