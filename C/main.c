@@ -1,26 +1,23 @@
 #include "framework.h"
 #include "location.h"
-#include <stdbool.h>  // bool type
+#include <stdbool.h> // bool type
 #include <stdio.h>
-#include <sys/stat.h> // stat
-#include <windows.h>  // sleep
+#include <windows.h> // sleep
 
-bool HAVE_BEEN_HIDING = false;
-
-void found_prisoner(void) {
+void search_guardroom_found_prisoner(void) {
+    delete_location(); // notify other instance of being found
     printf("You have found the escaped prisonor! Take them back to their cell.\n");
     game_won();
 }
 
-void room_guardroom();
+void room_guardroom(void);
 
 void search_guardroom(void) {
     // this is a special scenario fork: a decision is made which scenario to play
     printf("You are searching the guardroom.\n");
 
     if (exists_location()) {
-        delete_location();
-        found_prisoner();
+        search_guardroom_found_prisoner();
 
     } else {
         printf("There is no-one here\n");
@@ -28,7 +25,14 @@ void search_guardroom(void) {
     }
 }
 
-void room_right_corridor();
+void room_right_corridor(void);
+
+void hiding_leave_out_of_room(void) {
+    // extra logic
+    delete_location();
+
+    room_right_corridor();
+}
 
 void hide(void);
 
@@ -40,7 +44,7 @@ void in_hiding(void) {
             {
                 .description = "go back (o)ut of the guardroom",
                 .action = "out of the guardroom",
-                .next_method = room_right_corridor,
+                .next_method = hiding_leave_out_of_room,
             },
             {
                 .description = "Continue (h)iding",
@@ -49,10 +53,11 @@ void in_hiding(void) {
             },
         }};
 
-    game_execute_scenario(&scenario);
+    game_user_choice_of_scenario(&scenario);
 }
 
 void been_captured(void) {
+    // location has been deleted
     printf("You realize the room is not empty any more. A guard appears and captures you. Soon you find yourself back in your cell, feeling miserable that your escape attempt failed.\n");
     game_lost();
 }
@@ -61,10 +66,9 @@ void hide(void) {
     // this is a special scenario fork: a decision is made which scenario to play
 
     printf("You are hiding in the guardroom.\n");
+    write_location("guardroom");
 
     // hiding loop
-    write_location("guardroom");
-    HAVE_BEEN_HIDING = true;
     int counter = 0;
     while (exists_location() && counter < 2) {
         printf("The screams are quieter.\n");
@@ -102,7 +106,7 @@ void room_guardroom(void) {
             },
         }};
 
-    game_execute_scenario(&scenario);
+    game_user_choice_of_scenario(&scenario);
 }
 
 void room_upstairs(void) {
@@ -130,7 +134,7 @@ void room_left_corridor(void) {
             },
         }};
 
-    game_execute_scenario(&scenario);
+    game_user_choice_of_scenario(&scenario);
 }
 
 void fight_man(void) {
@@ -155,13 +159,7 @@ void room_right_corridor(void) {
             },
         }};
 
-    // extra logic
-    if (HAVE_BEEN_HIDING) {
-        delete_location();
-        HAVE_BEEN_HIDING = false;
-    }
-
-    game_execute_scenario(&scenario);
+    game_user_choice_of_scenario(&scenario);
 }
 
 void room_corridor_outside_cell(void) {
@@ -179,7 +177,7 @@ void room_corridor_outside_cell(void) {
             },
         }};
 
-    game_execute_scenario(&scenario);
+    game_user_choice_of_scenario(&scenario);
 }
 
 void room_in_a_cell(void) {
@@ -197,7 +195,7 @@ void room_in_a_cell(void) {
             },
         }};
 
-    game_execute_scenario(&scenario);
+    game_user_choice_of_scenario(&scenario);
 }
 
 int main() {

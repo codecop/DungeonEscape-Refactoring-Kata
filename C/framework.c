@@ -41,7 +41,7 @@ void _game_first_scenario(void) {
     first_scenario();
 }
 
-void game_execute_scenario(const Scenario *const scenario) {
+void game_user_choice_of_scenario(const Scenario *const scenario) {
     scenario_introduce(scenario);
 
     char *choice_keys = scenario_list_choice_keys(scenario);
@@ -74,7 +74,7 @@ void _game_play_again(void) {
             },
         }};
 
-    game_execute_scenario(&scenario);
+    game_user_choice_of_scenario(&scenario);
 }
 
 void game_won(void) {
