@@ -51,19 +51,9 @@ void scenario_execute_choice(const Scenario *const scenario, int choice_key) {
         if (choice_key == choice_get_key(choice)) {
             choice_execute(choice);
             if (choice->next_scenario) {
-                scenario_execute(choice->next_scenario);
+                // TODO scenario_execute(choice->next_scenario);
             }
             break;
         }
     }
-}
-
-void scenario_execute(const Scenario *const scenario) {
-    scenario_introduce(scenario);
-
-    char *choice_keys = scenario_list_choice_keys(scenario);
-    int command = input_command(choice_keys);
-    assert(strchr(choice_keys, command) != NULL);
-
-    scenario_execute_choice(scenario, command);
 }

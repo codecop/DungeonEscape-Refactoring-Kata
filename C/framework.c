@@ -1,4 +1,5 @@
 #include "scenario.h"
+#include <assert.h>  
 #include <ctype.h>  // isgraph
 #include <stdio.h>
 #include <stdlib.h> // exit
@@ -52,8 +53,18 @@ Scenario Scenario_Play_again = {
         },
     }};
 
+void execute_scenario(const Scenario *const scenario) {
+    scenario_introduce(scenario);
+
+    char *choice_keys = scenario_list_choice_keys(scenario);
+    int command = input_command(choice_keys);
+    assert(strchr(choice_keys, command) != NULL);
+
+    scenario_execute_choice(scenario, command);
+}
+
 void play_again(void) {
-    scenario_execute(&Scenario_Play_again);
+    execute_scenario(&Scenario_Play_again);
 }
 
 void game_won(void) {
