@@ -50,3 +50,20 @@ void scenario_execute_choice(const Scenario *const scenario, int choice_key) {
         }
     }
 }
+
+const char *_fork_describe(const ScenarioFork *const scenario) {
+    return scenario->description;
+}
+
+void scenario_execute_fork(const ScenarioFork *const scenario) {
+    const char *description = _fork_describe(scenario);
+    printf("%s.\n", description);
+
+    if (scenario->is_first_choice()) {
+        const Choice *const choice = &scenario->choices[0];
+        choice_execute(choice);
+    } else {
+        const Choice *const choice = &scenario->choices[1];
+        choice_execute(choice);
+    }
+}

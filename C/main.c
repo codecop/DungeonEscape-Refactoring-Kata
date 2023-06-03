@@ -15,29 +15,20 @@ void search_guardroom_found_prisoner(void) {
 void room_guardroom(void);
 
 void search_guardroom(void) {
-    // Fork fork = {
-    //     .description = "You are searching the guardroom",
-    //     .fork = exists_location
-    //     .choices = {
-    //         {
-    //             .next_method = search_guardroom_found_prisoner,
-    //         },
-    //         {
-    //             .action = "There is no-one here",
-    //             .next_method = room_guardroom,
-    //         },
-    //     }};
+    ScenarioFork scenario = {
+        .description = "You are searching the guardroom",
+        .is_first_choice = exists_location,
+        .choices = {
+            {
+                .next_method = search_guardroom_found_prisoner,
+            },
+            {
+                .action = "There is no-one here",
+                .next_method = room_guardroom,
+            },
+        }};
 
-    // this is a special scenario fork: a decision is made which scenario to play
-    printf("You are searching the guardroom.\n");
-
-    if (exists_location()) {
-        search_guardroom_found_prisoner();
-
-    } else {
-        printf("There is no-one here\n");
-        room_guardroom();
-    }
+    scenario_execute_fork(&scenario);
 }
 
 void room_right_corridor(void);
