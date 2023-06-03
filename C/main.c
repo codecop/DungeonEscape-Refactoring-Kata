@@ -158,6 +158,7 @@ void room_right_corridor(void) {
     // extra logic
     if (HAVE_BEEN_HIDING) {
         delete_location();
+        HAVE_BEEN_HIDING = false;
     }
 
     game_execute_scenario(&scenario);

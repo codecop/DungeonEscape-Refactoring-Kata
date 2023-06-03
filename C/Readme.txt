@@ -6,3 +6,6 @@ Working through the kata.
     - typo Quit/quit
     - typo Contragulations
 * 3h Refactor structure for Scenarios and unify all scenarios, extract basic framework
+* 1h Simplifying/modularity, split and extract.
+    - two scenarios with forks in them
+    - one scenario with extra logic in method
