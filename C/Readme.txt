@@ -9,3 +9,4 @@ Working through the kata.
 * 1h Simplifying/modularity, split and extract.
     - two scenarios with forks in them
     - one scenario with extra logic in method
+* 1h Fooling around, rename again and again, extract fork. No more ideas.
