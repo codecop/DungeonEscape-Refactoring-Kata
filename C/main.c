@@ -5,7 +5,9 @@
 #include <windows.h> // sleep
 
 void search_guardroom_found_prisoner(void) {
-    delete_location(); // notify other instance of being found
+    // notify other instance of being found
+    delete_location();
+
     printf("You have found the escaped prisonor! Take them back to their cell.\n");
     game_won();
 }
@@ -13,6 +15,19 @@ void search_guardroom_found_prisoner(void) {
 void room_guardroom(void);
 
 void search_guardroom(void) {
+    // Fork fork = {
+    //     .description = "You are searching the guardroom",
+    //     .fork = exists_location
+    //     .choices = {
+    //         {
+    //             .next_method = search_guardroom_found_prisoner,
+    //         },
+    //         {
+    //             .action = "There is no-one here",
+    //             .next_method = room_guardroom,
+    //         },
+    //     }};
+
     // this is a special scenario fork: a decision is made which scenario to play
     printf("You are searching the guardroom.\n");
 
@@ -27,14 +42,14 @@ void search_guardroom(void) {
 
 void room_right_corridor(void);
 
-void hiding_leave_out_of_room(void) {
+void hiding_leaving_guardroom(void) {
     // extra logic
     delete_location();
 
     room_right_corridor();
 }
 
-void hide(void);
+void hiding_in_guardroom(void);
 
 void in_hiding(void) {
     Scenario scenario = {
@@ -44,12 +59,12 @@ void in_hiding(void) {
             {
                 .description = "go back (o)ut of the guardroom",
                 .action = "out of the guardroom",
-                .next_method = hiding_leave_out_of_room,
+                .next_method = hiding_leaving_guardroom,
             },
             {
                 .description = "Continue (h)iding",
                 .action = "hide",
-                .next_method = hide,
+                .next_method = hiding_in_guardroom,
             },
         }};
 
@@ -57,14 +72,12 @@ void in_hiding(void) {
 }
 
 void been_captured(void) {
-    // location has been deleted
+    // location has been deleted by other instance
     printf("You realize the room is not empty any more. A guard appears and captures you. Soon you find yourself back in your cell, feeling miserable that your escape attempt failed.\n");
     game_lost();
 }
 
-void hide(void) {
-    // this is a special scenario fork: a decision is made which scenario to play
-
+void hiding_in_guardroom(void) {
     printf("You are hiding in the guardroom.\n");
     write_location("guardroom");
 
@@ -97,7 +110,7 @@ void room_guardroom(void) {
             {
                 .description = "(h)ide in the guardroom",
                 .action = "hide",
-                .next_method = hide,
+                .next_method = hiding_in_guardroom,
             },
             {
                 .description = "(s)earch the guardroom",
