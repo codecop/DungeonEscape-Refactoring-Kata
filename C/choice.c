@@ -48,13 +48,21 @@ char *_choice_action_from_description(const char *description) {
     return choice_action_buffer;
 }
 
-void choice_execute(const Choice *const choice) {
+void _choice_print_action(const Choice *const choice) {
     char *action = choice->action;
     if (action == NULL || action[0] == '\0') {
-        assert(choice->description);
-        action = _choice_action_from_description(choice->description);
+        if (_choice_string_not_empty(choice->description)) {
+            action = _choice_action_from_description(choice->description);
+        };
     }
-    printf("%s\n", action);
+    if (_choice_string_not_empty(action)) {
+        printf("%s\n", action);
+    }
+}
+
+void choice_execute(const Choice *const choice) {
+    _choice_print_action(choice);
+
     if (choice->next_method) {
         choice->next_method();
     }
