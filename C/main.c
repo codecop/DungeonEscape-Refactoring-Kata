@@ -1,27 +1,11 @@
 #include "framework.h"
+#include "location.h"
 #include <stdbool.h>  // bool type
 #include <stdio.h>
 #include <sys/stat.h> // stat
 #include <windows.h>  // sleep
 
 bool HAVE_BEEN_HIDING = false;
-
-bool file_exists(char *filename) {
-    struct stat buffer;
-    return (stat(filename, &buffer) == 0);
-}
-
-void write_location(char *location) {
-    FILE *fp = fopen("location.txt", "a");
-    fprintf(fp, "%s\n", location);
-    fclose(fp);
-}
-
-void delete_location() {
-    remove("location.txt");
-}
-
-// game scenarios
 
 void found_prisoner(void) {
     printf("You have found the escaped prisonor! Take them back to their cell.\n");
@@ -34,7 +18,7 @@ void search_guardroom(void) {
     // this is a special scenario fork: a decision is made which scenario to play
     printf("You are searching the guardroom.\n");
 
-    if (file_exists("location.txt")) {
+    if (exists_location()) {
         delete_location();
         found_prisoner();
 
@@ -82,13 +66,13 @@ void hide(void) {
     write_location("guardroom");
     HAVE_BEEN_HIDING = true;
     int counter = 0;
-    while (file_exists("location.txt") && counter < 2) {
+    while (exists_location() && counter < 2) {
         printf("The screams are quieter.\n");
         Sleep(500);
         counter++;
     }
 
-    if (file_exists("location.txt")) {
+    if (exists_location()) {
         in_hiding();
 
     } else {
