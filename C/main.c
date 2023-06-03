@@ -118,10 +118,56 @@ void room_upstairs(void) {
     game_won();
 }
 
+void flee_man(void) {
+    printf("Unfortunately the man catches you and you fall to the floor dead.\n");
+    game_lost();
+}
+
+void room_left_corridor(void);
+
+void fight_man_with_torch(void) {
+    printf("The screaming man is scared off and runs up the stairs.\n");
+    room_left_corridor();
+}
+
+bool TORCH_IS_HERE = true;
+bool torch_is_here(void) {
+    return TORCH_IS_HERE;
+}
+
+void torched_picked_up(void) {
+    TORCH_IS_HERE = false;
+    /*
+        The hero should be able to pick up the torch and fight the screaming man with it.
+        Add an option to the 'left corridor' - (p)ick up the torch.
+        This should take you to a new list of options - the screaming man is in front of you.
+        Your choices are to run or fight him with the torch.
+        If you run, he kills you. If you fight, he is scared off and runs up the stairs,
+        leaving you back at the same 'left corridor' options menu minus the option to pick up the torch.
+    */
+    Scenario scenario = {
+        .description = "The screaming man is in front of you, carrying a big sword",
+        .number_of_choices = 2,
+        .choices = {
+            {
+                .description = "(r)un the other way",
+                .action = "run",
+                .next_method = flee_man,
+            },
+            {
+                .description = "(f)ight him with the torch",
+                .action = "fight",
+                .next_method = fight_man_with_torch,
+            },
+        }};
+
+    game_user_choice_of_scenario(&scenario);
+}
+
 void room_left_corridor(void) {
     Scenario scenario = {
         .description = "You are standing at the bottom of some stairs in the dungeon. There is a torch burning on your left and a closed door on your right. You hear screams behind you",
-        .number_of_choices = 3,
+        .number_of_choices = 4,
         .choices = {
             {
                 .description = "go (u)p the stairs",
@@ -135,6 +181,11 @@ void room_left_corridor(void) {
             {
                 .description = "go (t)hrough the door",
                 .next_method = room_guardroom,
+            },
+            {
+                .description = "(p)ick up the torch",
+                .is_enabled = torch_is_here,
+                .next_method = torched_picked_up,
             },
         }};
 

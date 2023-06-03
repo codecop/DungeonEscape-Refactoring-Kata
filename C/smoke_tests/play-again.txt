@@ -14,6 +14,7 @@ You are standing at the bottom of some stairs in the dungeon. There is a torch b
 	 go (u)p the stairs
 	 go (b)ack
 	 go (t)hrough the door
+	 (p)ick up the torch
 
 up the stairs
 The stairs lead to the dungeon exit. Your friend Freija the Magnificent Warrior runs towards you and embraces you. 'I am here to rescue you!' she says.

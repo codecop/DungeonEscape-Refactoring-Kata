@@ -14,6 +14,7 @@ You are standing at the bottom of some stairs in the dungeon. There is a torch b
 	 go (u)p the stairs
 	 go (b)ack
 	 go (t)hrough the door
+	 (p)ick up the torch
 
 go through the door
 You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out. Would you like to:
